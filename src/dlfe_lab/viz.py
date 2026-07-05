@@ -5,10 +5,14 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# 한글 폰트: OS별 fallback (Windows -> macOS -> Linux 나눔/노토 -> 기본)
-plt.rcParams["font.family"] = [
-    "Malgun Gothic", "AppleGothic", "NanumGothic", "Noto Sans CJK KR", "DejaVu Sans",
-]
+# 한글 폰트: 설치된 것을 감지해 하나만 선택 (Windows/macOS/Linux 순서, 경고 없음)
+from matplotlib import font_manager as _fm
+
+_installed = {f.name for f in _fm.fontManager.ttflist}
+for _cand in ("Malgun Gothic", "AppleGothic", "NanumGothic", "Noto Sans CJK KR", "Noto Sans KR"):
+    if _cand in _installed:
+        plt.rcParams["font.family"] = _cand
+        break
 plt.rcParams["axes.unicode_minus"] = False
 
 
