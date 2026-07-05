@@ -37,7 +37,7 @@ from s43_kr_scale_remote import (build_corpus, build_w2v, build_event_emb, log,
 DEV = "cuda" if torch.cuda.is_available() else "cpu"
 SEED = 13
 FEAT = os.environ.get("KR45_FEAT", os.path.join(ART, "kr45_features.npz"))
-SCORES = "/home/junyoung/bk_scores/bigkinds_finbert_scores.parquet"
+SCORES = os.environ.get("DLFE_BK_SCORES", os.path.join(os.path.expanduser("~"), "bk_scores", "bigkinds_finbert_scores.parquet"))
 torch.manual_seed(SEED); np.random.seed(SEED)
 
 # ------------------------------------------------------------------ features

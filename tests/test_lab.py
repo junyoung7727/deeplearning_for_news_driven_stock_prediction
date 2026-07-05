@@ -1,4 +1,4 @@
-"""dlfe_lab 실데이터 스모크 테스트 (alphamale venv python으로 실행)."""
+"""dlfe_lab 실데이터 스모크 테스트 (requirements.txt 가상환경으로 실행)."""
 import sys
 import unittest
 from pathlib import Path

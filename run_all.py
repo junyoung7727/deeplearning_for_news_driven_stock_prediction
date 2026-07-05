@@ -5,7 +5,7 @@ Runs every stage in order:
     s1 data -> s2 word2vec -> s3 events -> s4 NTN -> s5 features
     -> s7 train/eval (+ s8 simulation) -> s9 report
 
-Usage (from the alphamale venv):
+Usage (from your project venv, see README Setup):
     python run_all.py
 """
 from __future__ import annotations

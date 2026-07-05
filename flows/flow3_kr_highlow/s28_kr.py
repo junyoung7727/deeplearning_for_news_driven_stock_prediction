@@ -21,8 +21,8 @@ import config as C
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.metrics import accuracy_score, matthews_corrcoef
 
-BK = r"D:\Github\homeserver\alphamale\data\news\bigkinds"
-PR = r"D:\Github\homeserver\alphamale\data\price"
+BK = os.path.join(C.DATA_ROOT, "news", "bigkinds")
+PR = os.path.join(C.DATA_ROOT, "price")
 
 def main():
     # ---- KR prices ----

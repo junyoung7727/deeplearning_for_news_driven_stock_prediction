@@ -30,8 +30,9 @@ for _p in (_ROOT, *sorted((_ROOT / "flows").glob("flow*"))):
         _sys.path.insert(0, str(_p))
 # ---------------------------------------------------------------------
 import os, glob, json, time, itertools, numpy as np, pandas as pd
+import config as C
 
-D5 = r"D:/Github/homeserver/alphamale/data/prices/fmp_5min"
+D5 = os.environ.get("DLFE_MIN5_KR_DIR", os.path.join(C.DATA_ROOT, "prices", "fmp_5min"))
 ART = str(_ROOT / "artifacts")
 SCORES = os.path.join(ART, "kr50_scores_min5univ.parquet")
 COST = 0.0033

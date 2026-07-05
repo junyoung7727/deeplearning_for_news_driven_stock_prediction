@@ -44,7 +44,7 @@ from s47_kr_ensemble_significance import (train_tf, date_codes, boot_mcc_ci,
 from s45_kr_feature_ladder import DEV, log
 
 ART = os.path.join(os.path.expanduser("~"), "dlfe", "artifacts")
-SCORES = "/home/junyoung/bk_scores/bigkinds_finbert_scores.parquet"
+SCORES = os.environ.get("DLFE_BK_SCORES", os.path.join(os.path.expanduser("~"), "bk_scores", "bigkinds_finbert_scores.parquet"))
 SEED = 13
 KS = (0.02, 0.03, 0.05)
 torch.manual_seed(SEED); np.random.seed(SEED)

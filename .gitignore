@@ -13,5 +13,8 @@ artifacts/kr36_features_fresh.npz
 artifacts/kr_ie_features.npz
 artifacts/kr_titles_2024p.parquet
 
+# Private source data (config.DATA_ROOT default) — never commit
+data/
+
 # Local env
 .env

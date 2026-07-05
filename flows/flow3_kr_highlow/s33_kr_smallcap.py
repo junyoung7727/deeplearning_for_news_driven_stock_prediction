@@ -20,8 +20,8 @@ import config as C
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.metrics import accuracy_score, matthews_corrcoef
 
-BK = r"D:\Github\homeserver\alphamale\data\news\bigkinds"
-BASE = r"D:\Github\homeserver\alphamale\data\analysis_outputs\kr_ff5_foreign_regression_20260619T105218Z"
+BK = os.path.join(C.DATA_ROOT, "news", "bigkinds")
+BASE = os.path.join(C.DATA_ROOT, "analysis_outputs", "kr_ff5_foreign_regression_20260619T105218Z")
 
 def main():
     sec = pd.read_parquet(os.path.join(BASE, "kr_ff5_security_factor_daily.parquet"),

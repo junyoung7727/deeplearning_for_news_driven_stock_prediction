@@ -19,10 +19,21 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 ART  = os.path.join(ROOT, "artifacts")
 os.makedirs(ART, exist_ok=True)
 
-# Source data (FMP, already on disk as parquet)
-NEWS_PARQUET  = r"D:\Github\homeserver\alphamale\data\news\us_fmp_news_rich.parquet"
-DAILY_PARQUET = r"D:\Github\homeserver\alphamale\data\price\us_daily_data.parquet"
-MIN5_NVDA     = r"D:\Github\homeserver\alphamale\data\prices\fmp_5min_us\NVDA.parquet"
+# Source data roots — everything resolves relative to the repo by default.
+# On a fresh clone, put private source data under <repo>/data/ (gitignored),
+# or point DLFE_DATA_ROOT (or the per-file variables) somewhere else.
+# The practice notebook (notebooks/three_flow_lab.ipynb) does NOT need these —
+# it reads only the committed artifacts/ outputs.
+DATA_ROOT = os.environ.get("DLFE_DATA_ROOT", os.path.join(ROOT, "data"))
+NEWS_PARQUET  = os.environ.get(
+    "DLFE_NEWS_PARQUET",
+    os.path.join(DATA_ROOT, "news", "us_fmp_news_rich.parquet"))
+DAILY_PARQUET = os.environ.get(
+    "DLFE_DAILY_PARQUET",
+    os.path.join(DATA_ROOT, "price", "us_daily_data.parquet"))
+MIN5_NVDA     = os.environ.get(
+    "DLFE_MIN5_NVDA",
+    os.path.join(DATA_ROOT, "prices", "fmp_5min_us", "NVDA.parquet"))
 
 # ----------------------------------------------------------------------------
 # Target & universe

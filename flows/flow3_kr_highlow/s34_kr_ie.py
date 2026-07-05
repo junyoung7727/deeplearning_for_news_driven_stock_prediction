@@ -18,8 +18,8 @@ from kiwipiepy import Kiwi
 from s4_ntn import NTN
 from s6_models import DenseModel, fit, predict, metrics
 torch.manual_seed(C.SEED); np.random.seed(C.SEED)
-BK = r"D:\Github\homeserver\alphamale\data\news\bigkinds"
-BASE = r"D:\Github\homeserver\alphamale\data\analysis_outputs\kr_ff5_foreign_regression_20260619T105218Z"
+BK = os.path.join(C.DATA_ROOT, "news", "bigkinds")
+BASE = os.path.join(C.DATA_ROOT, "analysis_outputs", "kr_ff5_foreign_regression_20260619T105218Z")
 D = C.WORD_DIM
 NOUN = {"NNG", "NNP", "SL", "SN", "SH"}
 
