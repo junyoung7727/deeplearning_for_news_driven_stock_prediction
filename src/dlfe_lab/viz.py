@@ -5,7 +5,10 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-plt.rcParams["font.family"] = "Malgun Gothic"
+# 한글 폰트: OS별 fallback (Windows -> macOS -> Linux 나눔/노토 -> 기본)
+plt.rcParams["font.family"] = [
+    "Malgun Gothic", "AppleGothic", "NanumGothic", "Noto Sans CJK KR", "DejaVu Sans",
+]
 plt.rcParams["axes.unicode_minus"] = False
 
 
