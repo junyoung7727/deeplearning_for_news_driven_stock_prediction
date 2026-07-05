@@ -35,8 +35,8 @@ checked on NVDA: `Luss[2012] (BoW+SVM)`, `E‑NN`, `WB‑NN`, `WB‑CNN`, `E‑C
 
 | Role | File |
 |---|---|
-| News titles (9 mega-caps) | `…/alphamale/data/news/us_fmp_news_rich.parquet` |
-| Daily OHLC (adjusted) | `…/alphamale/data/price/us_daily_data.parquet` |
+| News titles (9 mega-caps) | `data/news/us_fmp_news_rich.parquet` (또는 `DLFE_NEWS_PARQUET`) |
+| Daily OHLC (adjusted) | `data/price/us_daily_data.parquet` (또는 `DLFE_DAILY_PARQUET`) |
 
 Word/event embeddings are trained on all 9 tickers' titles (NVDA, AAPL, MSFT,
 JPM, V, BRK-B, CAT, RTX, GE) **before** the test period; prediction is NVDA-only.
@@ -107,17 +107,69 @@ representations that feed the same NN/CNN heads:
 Any HF encoder id (e.g. a finance RoBERTa) is a one-line swap in `config.py`.
 Models are ensembled over `N_SEEDS` seeds (unbiased vs best-dev-seed selection).
 
-## Running
+## Setup (설치)
 
-The interpreter is the alphamale venv (has torch/pandas/pyarrow/sklearn/spaCy):
+```bash
+git clone https://github.com/junyoung7727/deeplearning_for_news_driven_stock_prediction.git
+cd deeplearning_for_news_driven_stock_prediction
 
-```bat
-D:\Github\homeserver\alphamale\.venv\Scripts\python.exe run_all.py
+# 1) 가상환경 (Python 3.11+ 권장, 3.14에서 검증됨)
+python -m venv .venv
+#    Windows:      .venv\Scripts\activate
+#    macOS/Linux:  source .venv/bin/activate
+
+# 2) 패키지 설치
+pip install -r requirements.txt
+
+# 3) Jupyter 커널 등록 후 실습 노트북 열기
+python -m ipykernel install --user --name dlfe --display-name "Python (dlfe)"
+jupyter lab notebooks/three_flow_lab.ipynb   # 커널을 "Python (dlfe)"로 선택
 ```
 
-Practice notebook: `notebooks/three_flow_lab.ipynb` (run it with the alphamale venv Jupyter kernel).
+실습 노트북은 저장소에 포함된 `artifacts/`(데이터·학습된 가중치·결과)만 읽으므로
+**추가 데이터나 환경변수 없이 바로 전체 셀이 실행됩니다.**
+테스트: `python -m unittest tests.test_lab`
 
-(On Git Bash, invoke through `MSYS_NO_PATHCONV=1 cmd /c '…python.exe run_all.py'`.)
+### Environment variables (환경변수) — 원본 파이프라인 재실행 시에만
+
+`run_all.py`(s1→…→s9 전체 재학습)와 KR 스크립트는 비공개 원천 데이터가 필요합니다.
+**모든 경로는 저장소 기준 상대경로가 기본값**입니다: 데이터를 `<repo>/data/` 아래에
+두면 환경변수 없이 그대로 동작하고, 다른 곳에 있다면 아래 변수로 지정하세요:
+
+| 변수 | 기본값 (repo 기준) | 용도 |
+|---|---|---|
+| `DLFE_DATA_ROOT` | `data/` | 모든 원천 데이터의 루트 (아래 변수들의 부모) |
+| `DLFE_NEWS_PARQUET` | `data/news/us_fmp_news_rich.parquet` | FMP 뉴스 제목 parquet |
+| `DLFE_DAILY_PARQUET` | `data/price/us_daily_data.parquet` | 미국 일봉 parquet |
+| `DLFE_MIN5_NVDA` | `data/prices/fmp_5min_us/NVDA.parquet` | NVDA 5분봉 parquet |
+| `DLFE_MIN5_KR_DIR` | `data/prices/fmp_5min/` | KR 5분봉 폴더 (s50/s51) |
+| `DLFE_BK_SCORES` | `~/bk_scores/bigkinds_finbert_scores.parquet` | BigKinds FinBERT 점수 (원격 s45/s48) |
+
+설정 방법:
+
+```powershell
+# Windows PowerShell — 현재 세션만
+$env:DLFE_NEWS_PARQUET  = "C:\data\us_fmp_news_rich.parquet"
+$env:DLFE_DAILY_PARQUET = "C:\data\us_daily_data.parquet"
+
+# Windows — 영구 등록 (새 터미널부터 적용)
+setx DLFE_NEWS_PARQUET "C:\data\us_fmp_news_rich.parquet"
+```
+
+```bash
+# macOS / Linux — 현재 세션만 (영구 등록은 ~/.bashrc 나 ~/.zshrc 에 추가)
+export DLFE_NEWS_PARQUET=/data/us_fmp_news_rich.parquet
+export DLFE_DAILY_PARQUET=/data/us_daily_data.parquet
+```
+
+## Running (원본 파이프라인)
+
+```bash
+python run_all.py    # s1 → s2 → s3 → s4 → t1 → s5 → s7 → s9 (수 시간, GPU 없이 CPU 가능)
+```
+
+GitHub 100 MB 제한으로 제외된 대용량 캐시(`kr36_features*.npz`, `kr_ie_features.npz`,
+`kr_titles_2024p.parquet`)는 `.gitignore`에 적힌 생성 스크립트로 재생성할 수 있습니다.
 
 Splits and all hyperparameters live in `config.py`. Paper-specified values are
 tagged `(paper)`; values the paper leaves unspecified are tagged `(paper-silent)`.
