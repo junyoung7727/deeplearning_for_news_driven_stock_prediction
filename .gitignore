@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# GitHub 100 MB hard limit — these caches cannot be pushed.
+# Regenerate: kr36_* via flows/flow3_kr_highlow/s36_kr_overnight.py,
+# kr_ie_features via s34_kr_ie.py, kr_titles_2024p via the BigKinds slim dump.
+artifacts/kr36_features.npz
+artifacts/kr36_features_fresh.npz
+artifacts/kr_ie_features.npz
+artifacts/kr_titles_2024p.parquet
+
+# Local env
+.env
