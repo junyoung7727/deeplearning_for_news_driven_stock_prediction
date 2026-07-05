@@ -1,0 +1,21 @@
+usable links: 185050  fresh share: 62.6%  FRESH_ONLY=True  (2s)
+overnight buckets: 29200  info buckets: 41577  (4s)
+small-cap samples: 147183  overnight-news: 2.5%  any-in-window: 31.6%  (15s)
+train 24321  dev 3638  test 18597  (18s)
+    ep  0 dev_mcc=0.0000 best=0.0000
+    ep  7 dev_mcc=0.0208 best=0.0208
+    ep 10 dev_mcc=-0.0058 best=0.0208
+    ep 11 dev_mcc=0.0312 best=0.0312
+    ep 20 dev_mcc=0.0010 best=0.0312
+
+KR SMALL-CAP EB-CNN, OVERNIGHT ALIGNMENT_fresh (dev_mcc=0.0312):
+  [ANY-event-in-window] n=18597 base=0.5700 acc=0.5463 mcc=+0.0021
+     conf top 50%: acc=0.5664 mcc=+0.0087 base=0.5751 (n=9311)
+     conf top 30%: acc=0.5730 mcc=+0.0201 base=0.5781 (n=5579)
+     conf top 20%: acc=0.5737 mcc=+0.0259 base=0.5758 (n=3720)
+     conf top 10%: acc=0.5714 mcc=+0.0320 base=0.5720 (n=1869)
+  [OVERNIGHT-news days] n=1539 base=0.5452 acc=0.5328 mcc=+0.0180
+     conf top 50%: acc=0.5364 mcc=-0.0026 base=0.5481 (n=770)
+     conf top 30%: acc=0.5476 mcc=+0.0236 base=0.5498 (n=462)
+     conf top 20%: acc=0.5422 mcc=+0.0451 base=0.5357 (n=308)
+     conf top 10%: acc=0.5844 mcc=+0.1372 base=0.5584 (n=154)

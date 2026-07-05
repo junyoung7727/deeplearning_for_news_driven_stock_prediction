@@ -1,0 +1,39 @@
+linked-news titles: 598133  (58s)
+tokenized 598133 titles, events from 170623 (28.5%)  (133s)
+(ticker,news) links: 671081  (301s)
+KR vocab: 31049  (305s)
+w2v pairs: 8000000  (324s)
+  w2v epoch 1/4 loss=2.2545  (398s)
+  w2v epoch 2/4 loss=2.1274  (467s)
+  w2v epoch 3/4 loss=2.1024  (537s)
+  w2v epoch 4/4 loss=2.0975  (612s)
+  NTN epoch 1/10 hinge=0.2446 lam*L2=2.248 margin-satisfied=75.5%  (637s)
+  NTN epoch 4/10 hinge=0.2354 lam*L2=2.808 margin-satisfied=76.9%  (695s)
+  NTN epoch 7/10 hinge=0.2498 lam*L2=3.394 margin-satisfied=75.1%  (754s)
+  NTN epoch 10/10 hinge=0.2915 lam*L2=4.181 margin-satisfied=71.2%  (812s)
+KR NTN done, event embs=166252  (818s)
+usable links: 185050  (819s)
+overnight buckets: 41244  info buckets: 41577  (822s)
+small-cap samples: 147183  overnight-news: 3.8%  any-in-window: 31.6%  (835s)
+train 24321  dev 3638  test 18597  (838s)
+    ep  0 dev_mcc=-0.0142 best=-0.0142
+    ep  2 dev_mcc=-0.0052 best=-0.0052
+    ep  4 dev_mcc=-0.0007 best=-0.0007
+    ep  7 dev_mcc=0.0090 best=0.0090
+    ep 10 dev_mcc=-0.0061 best=0.0090
+    ep 15 dev_mcc=0.0128 best=0.0128
+    ep 20 dev_mcc=0.0119 best=0.0128
+    ep 21 dev_mcc=0.0155 best=0.0155
+    ep 30 dev_mcc=-0.0189 best=0.0155
+
+KR SMALL-CAP EB-CNN, OVERNIGHT ALIGNMENT (dev_mcc=0.0155):
+  [ANY-event-in-window] n=18597 base=0.5700 acc=0.5422 mcc=+0.0092
+     conf top 50%: acc=0.5486 mcc=+0.0080 base=0.5727 (n=9300)
+     conf top 30%: acc=0.5454 mcc=+0.0115 base=0.5726 (n=5590)
+     conf top 20%: acc=0.5467 mcc=+0.0166 base=0.5753 (n=3737)
+     conf top 10%: acc=0.5446 mcc=+0.0236 base=0.5629 (n=1860)
+  [OVERNIGHT-news days] n=2352 base=0.5468 acc=0.5034 mcc=-0.0223
+     conf top 50%: acc=0.5179 mcc=-0.0061 base=0.5544 (n=1176)
+     conf top 30%: acc=0.5099 mcc=-0.0351 base=0.5637 (n=706)
+     conf top 20%: acc=0.5393 mcc=+0.0420 base=0.5456 (n=471)
+     conf top 10%: acc=0.5466 mcc=+0.0522 base=0.5466 (n=236)

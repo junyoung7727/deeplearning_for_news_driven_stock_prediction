@@ -1,0 +1,30 @@
+loaded 5min tickers=89  (5s)
+scores rows=159136 tickers=65 range 2015-02-16..2026-06-18  (6s)
+candidates/day-rows=47407 up5_rate=0.083 date 2022-11-10..2026-06-18  (66s)
+intraday train 2022-11-10..2024-08-26 test 2024-08-26..end  (66s)
+
+=== TRAIN optimization (Sharpe; TP=5% fixed; optimize n=SL) ===
+BEST train: SL=4% k=3 score>=0.8 gap<=0.02 -> Sharpe=0.59 CAGR=+5.7% MDD=-9.9% n=228 tp_rate=0.342
+
+=== TEST OOS (optimized) ===
+[OOS best] n=450 final=0.846 CAGR=-8.8% Sharpe=-0.63 MDD=-20.9% win=0.464 tp_rate=0.304 worstHit=-0.87%eq straddle=0.000 reasons={'sl': 0.36, 'close': 0.34, 'tp': 0.3}
+
+--- OOS robustness (SL sweep, best k/score/gap) ---
+[SL=2%] n=450 final=0.803 CAGR=-11.4% Sharpe=-1.13 MDD=-23.0% win=0.322 tp_rate=0.247 worstHit=-0.47%eq straddle=0.004 reasons={'sl': 0.64, 'tp': 0.25, 'close': 0.11, 'straddle': 0.0}
+[SL=3%] n=450 final=0.804 CAGR=-11.4% Sharpe=-0.92 MDD=-23.4% win=0.409 tp_rate=0.282 worstHit=-0.67%eq straddle=0.000 reasons={'sl': 0.48, 'tp': 0.28, 'close': 0.24}
+[SL=4%] n=450 final=0.846 CAGR=-8.8% Sharpe=-0.63 MDD=-20.9% win=0.464 tp_rate=0.304 worstHit=-0.87%eq straddle=0.000 reasons={'sl': 0.36, 'close': 0.34, 'tp': 0.3}
+[SL=5%] n=450 final=0.805 CAGR=-11.3% Sharpe=-0.78 MDD=-23.1% win=0.482 tp_rate=0.311 worstHit=-1.07%eq straddle=0.000 reasons={'close': 0.41, 'tp': 0.31, 'sl': 0.28}
+
+--- OOS k / score / gap sweep at best SL ---
+[k=1] n=216 final=0.947 CAGR=-2.9% Sharpe=-0.31 MDD=-12.4% win=0.468 tp_rate=0.324 worstHit=-0.87%eq straddle=0.000 reasons={'sl': 0.38, 'tp': 0.32, 'close': 0.3}
+[k=2] n=358 final=0.971 CAGR=-1.6% Sharpe=-0.08 MDD=-16.1% win=0.489 tp_rate=0.316 worstHit=-0.87%eq straddle=0.000 reasons={'sl': 0.35, 'close': 0.33, 'tp': 0.32}
+[k=3] n=450 final=0.846 CAGR=-8.8% Sharpe=-0.63 MDD=-20.9% win=0.464 tp_rate=0.304 worstHit=-0.87%eq straddle=0.000 reasons={'sl': 0.36, 'close': 0.34, 'tp': 0.3}
+[score>=0.5] n=1288 final=0.345 CAGR=-44.5% Sharpe=-2.76 MDD=-66.9% win=0.419 tp_rate=0.210 worstHit=-0.87%eq straddle=0.000 reasons={'close': 0.52, 'sl': 0.27, 'tp': 0.21}
+[score>=0.65] n=949 final=0.545 CAGR=-28.5% Sharpe=-1.76 MDD=-47.6% win=0.431 tp_rate=0.248 worstHit=-0.87%eq straddle=0.000 reasons={'close': 0.45, 'sl': 0.3, 'tp': 0.25}
+[score>=0.8] n=450 final=0.846 CAGR=-8.8% Sharpe=-0.63 MDD=-20.9% win=0.464 tp_rate=0.304 worstHit=-0.87%eq straddle=0.000 reasons={'sl': 0.36, 'close': 0.34, 'tp': 0.3}
+[gap<=0.02] n=450 final=0.846 CAGR=-8.8% Sharpe=-0.63 MDD=-20.9% win=0.464 tp_rate=0.304 worstHit=-0.87%eq straddle=0.000 reasons={'sl': 0.36, 'close': 0.34, 'tp': 0.3}
+[gap<=1.0] n=699 final=0.537 CAGR=-29.1% Sharpe=-1.99 MDD=-54.1% win=0.423 tp_rate=0.303 worstHit=-0.87%eq straddle=0.000 reasons={'sl': 0.41, 'tp': 0.3, 'close': 0.29}
+
+OOS quarterly mean net/trade: 2024Q3:+0.16%(9) | 2024Q4:-0.38%(57) | 2025Q1:-0.39%(67) | 2025Q2:+0.09%(47) | 2025Q3:-1.86%(13) | 2025Q4:+0.16%(46) | 2026Q1:+0.51%(96) | 2026Q2:-0.61%(115)
+OOS worst single-trade equity hit -0.87% | >1% eq losses 0 (0.00%)
+s50 done  (147s)

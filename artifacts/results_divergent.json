@@ -1,0 +1,55 @@
+{
+  "baseline": 0.5373900293255132,
+  "results": [
+    {
+      "method": "momentum rule",
+      "oos_acc": 0.5058651026392962,
+      "oos_mcc": 0.0
+    },
+    {
+      "method": "always-up (majority)",
+      "oos_acc": 0.5373900293255132,
+      "oos_mcc": 0.0
+    },
+    {
+      "method": "Logit-L2 (all feats)",
+      "oos_acc": 0.5073313782991202,
+      "oos_mcc": 0.002754120049987251
+    },
+    {
+      "method": "Logit-EN (all feats)",
+      "oos_acc": 0.5183284457478006,
+      "oos_mcc": 0.023306567600012276
+    },
+    {
+      "method": "HGB (all feats)",
+      "oos_acc": 0.5102639296187683,
+      "oos_mcc": 0.006518843244515815
+    },
+    {
+      "method": "RandomForest (all feats)",
+      "oos_acc": 0.5241935483870968,
+      "oos_mcc": -0.0009779401768324047
+    },
+    {
+      "method": "ExtraTrees (all feats)",
+      "oos_acc": 0.532991202346041,
+      "oos_mcc": -0.007397022142737479
+    },
+    {
+      "method": "HGB price-only",
+      "oos_acc": 0.5080645161290323,
+      "oos_mcc": -0.003982093581282057
+    },
+    {
+      "method": "HGB |ret|-weighted",
+      "oos_acc": 0.5080645161290323,
+      "oos_mcc": 0.0012453080372576341
+    },
+    {
+      "method": "ENSEMBLE(LE+HGB+RF)",
+      "oos_acc": 0.5021994134897361,
+      "oos_mcc": -0.01715983934656534
+    }
+  ]
+}

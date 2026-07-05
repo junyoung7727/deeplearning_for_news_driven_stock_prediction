@@ -1,0 +1,7 @@
+{
+  "target": "next-day volatility direction (|ret|>trailing median, balanced)",
+  "oos_baseline": 0.501466275659824,
+  "best_model": "Logit-EN",
+  "best_oos_acc": 0.5439882697947214,
+  "best_oos_mcc": 0.08815998810839835
+}

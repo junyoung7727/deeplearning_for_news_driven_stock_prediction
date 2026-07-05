@@ -1,0 +1,75 @@
+{
+  "operating_model": "price+news",
+  "dev_quantile_rule": [
+    {
+      "model": "price",
+      "target_cov": 1.0,
+      "test_cov": 1.0,
+      "test_acc": 0.5355191256830601,
+      "n": 366
+    },
+    {
+      "model": "price",
+      "target_cov": 0.5,
+      "test_cov": 0.5519125683060109,
+      "test_acc": 0.5495049504950495,
+      "n": 202
+    },
+    {
+      "model": "price",
+      "target_cov": 0.3,
+      "test_cov": 0.3005464480874317,
+      "test_acc": 0.5545454545454546,
+      "n": 110
+    },
+    {
+      "model": "price",
+      "target_cov": 0.2,
+      "test_cov": 0.20218579234972678,
+      "test_acc": 0.5540540540540541,
+      "n": 74
+    },
+    {
+      "model": "price",
+      "target_cov": 0.1,
+      "test_cov": 0.08196721311475409,
+      "test_acc": 0.5666666666666667,
+      "n": 30
+    },
+    {
+      "model": "price+news",
+      "target_cov": 1.0,
+      "test_cov": 1.0,
+      "test_acc": 0.5191256830601093,
+      "n": 366
+    },
+    {
+      "model": "price+news",
+      "target_cov": 0.5,
+      "test_cov": 0.4918032786885246,
+      "test_acc": 0.55,
+      "n": 180
+    },
+    {
+      "model": "price+news",
+      "target_cov": 0.3,
+      "test_cov": 0.3087431693989071,
+      "test_acc": 0.5398230088495575,
+      "n": 113
+    },
+    {
+      "model": "price+news",
+      "target_cov": 0.2,
+      "test_cov": 0.1912568306010929,
+      "test_acc": 0.5142857142857142,
+      "n": 70
+    },
+    {
+      "model": "price+news",
+      "target_cov": 0.1,
+      "test_cov": 0.08196721311475409,
+      "test_acc": 0.5,
+      "n": 30
+    }
+  ]
+}

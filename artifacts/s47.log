@@ -1,0 +1,67 @@
+tabular X (187701, 79); train/dev/test 98211/17652/71838  (2s)
+GBM UP2 iters=116 wpos=1.8 (27s)  (29s)
+GBM UP3 iters=95 wpos=3.4 (29s)  (58s)
+GBM UP5 iters=78 wpos=8.3 (27s)  (85s)
+GBM DN2 iters=136 wpos=1.5 (29s)  (114s)
+GBM DN3 iters=101 wpos=3.4 (27s)  (141s)
+GBM DN5 iters=79 wpos=11.2 (27s)  (169s)
+GBM dev MCC UP2=+0.285 UP3=+0.281 UP5=+0.261 DN2=+0.327 DN3=+0.333 DN5=+0.324  (170s)
+/home/junyoung/dlfe/code/s46_kr_bidirectional_rare.py:44: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.enc = nn.TransformerEncoder(enc, layers)
+TF seed 13 best dev focus MCC=+0.2873  (1126s)
+/home/junyoung/dlfe/code/s46_kr_bidirectional_rare.py:44: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.enc = nn.TransformerEncoder(enc, layers)
+TF seed 14 best dev focus MCC=+0.2840  (2519s)
+TF  dev MCC UP2=+0.276 UP3=+0.273 UP5=+0.265 DN2=+0.316 DN3=+0.321 DN5=+0.313  (2520s)
+ENS w(TF) UP2=0.3 UP3=0.8 UP5=0.9 DN2=0.7 DN3=0.5 DN5=0.3  (2537s)
+
+=== s47 test evaluation (n=71838, days=1113) ===
+
+--- GBM ---
+GBM UP2: base=0.3050 th=0.531 acc=0.7126 AP=0.5490 MCC=+0.3273 [+0.3143,+0.3398] top10=0.661 [0.641,0.681]
+   quarter MCC: +0.311 | +0.310 | +0.369 | +0.295
+GBM UP3: base=0.1832 th=0.531 acc=0.7678 AP=0.4322 MCC=+0.3240 [+0.3097,+0.3370] top10=0.518 [0.499,0.536]
+   quarter MCC: +0.297 | +0.318 | +0.364 | +0.306
+GBM UP5: base=0.0851 th=0.600 acc=0.8538 AP=0.2985 MCC=+0.2861 [+0.2728,+0.2996] top10=0.326 [0.311,0.341]
+   quarter MCC: +0.247 | +0.305 | +0.313 | +0.284
+GBM DN2: base=0.3328 th=0.490 acc=0.7141 AP=0.6117 MCC=+0.3563 [+0.3444,+0.3682] top10=0.743 [0.731,0.757]
+   quarter MCC: +0.293 | +0.376 | +0.384 | +0.370
+GBM DN3: base=0.1832 th=0.600 acc=0.8148 AP=0.4959 MCC=+0.3703 [+0.3571,+0.3838] top10=0.583 [0.566,0.599]
+   quarter MCC: +0.301 | +0.391 | +0.398 | +0.395
+GBM DN5: base=0.0632 th=0.646 acc=0.8993 AP=0.3533 MCC=+0.3460 [+0.3305,+0.3626] top10=0.317 [0.300,0.334]
+   quarter MCC: +0.294 | +0.363 | +0.361 | +0.373
+
+--- TF  ---
+TF  UP2: base=0.3050 th=0.529 acc=0.7196 AP=0.5419 MCC=+0.3132 [+0.3009,+0.3245] top10=0.648 [0.630,0.665]
+   quarter MCC: +0.296 | +0.309 | +0.343 | +0.285
+TF  UP3: base=0.1832 th=0.540 acc=0.7860 AP=0.4243 MCC=+0.3138 [+0.3013,+0.3256] top10=0.506 [0.490,0.523]
+   quarter MCC: +0.287 | +0.314 | +0.346 | +0.301
+TF  UP5: base=0.0851 th=0.555 acc=0.8523 AP=0.2938 MCC=+0.2813 [+0.2688,+0.2939] top10=0.317 [0.304,0.331]
+   quarter MCC: +0.234 | +0.305 | +0.309 | +0.284
+TF  DN2: base=0.3328 th=0.495 acc=0.7066 AP=0.5981 MCC=+0.3479 [+0.3355,+0.3608] top10=0.718 [0.698,0.736]
+   quarter MCC: +0.282 | +0.377 | +0.369 | +0.365
+TF  DN3: base=0.1832 th=0.522 acc=0.7917 AP=0.4851 MCC=+0.3637 [+0.3504,+0.3770] top10=0.568 [0.550,0.588]
+   quarter MCC: +0.291 | +0.396 | +0.387 | +0.387
+TF  DN5: base=0.0632 th=0.627 acc=0.9238 AP=0.3508 MCC=+0.3385 [+0.3199,+0.3582] top10=0.315 [0.298,0.331]
+   quarter MCC: +0.284 | +0.362 | +0.365 | +0.352
+
+--- ENS ---
+ENS UP2: base=0.3050 th=0.513 acc=0.7081 AP=0.5508 MCC=+0.3284 [+0.3157,+0.3403] top10=0.658 [0.638,0.677]
+   quarter MCC: +0.311 | +0.314 | +0.368 | +0.296
+ENS UP3: base=0.1832 th=0.565 acc=0.7996 AP=0.4318 MCC=+0.3148 [+0.3012,+0.3279] top10=0.513 [0.495,0.530]
+   quarter MCC: +0.296 | +0.314 | +0.340 | +0.302
+ENS UP5: base=0.0851 th=0.565 acc=0.8590 AP=0.2976 MCC=+0.2866 [+0.2737,+0.2995] top10=0.322 [0.309,0.337]
+   quarter MCC: +0.241 | +0.307 | +0.314 | +0.290
+ENS DN2: base=0.3328 th=0.491 acc=0.7116 AP=0.6119 MCC=+0.3567 [+0.3439,+0.3699] top10=0.737 [0.722,0.753]
+   quarter MCC: +0.291 | +0.381 | +0.382 | +0.372
+ENS DN3: base=0.1832 th=0.571 acc=0.8157 AP=0.4984 MCC=+0.3725 [+0.3589,+0.3863] top10=0.585 [0.568,0.602]
+   quarter MCC: +0.301 | +0.395 | +0.401 | +0.397
+ENS DN5: base=0.0632 th=0.640 acc=0.9068 AP=0.3570 MCC=+0.3536 [+0.3377,+0.3715] top10=0.319 [0.302,0.337]
+   quarter MCC: +0.297 | +0.375 | +0.370 | +0.381
+
+--- daily cross-sectional selection (ENS) ---
+   UP5 daily top1: hit=0.447 [0.420,0.476] vs day-base 0.084 (days=1113)
+   UP5 daily top3: hit=0.371 [0.354,0.389] vs day-base 0.084 (days=1113)
+   DN5 daily top1: hit=0.513 [0.485,0.544] vs day-base 0.061 (days=1113)
+   DN5 daily top3: hit=0.395 [0.377,0.413] vs day-base 0.061 (days=1113)
+saved kr47_probs.npz  (2539s)

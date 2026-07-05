@@ -1,0 +1,15 @@
+C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.6.3) or chardet (7.2.0)/charset_normalizer (3.4.4) doesn't match a supported version!
+  warnings.warn(
+  re-parsed 20000/87254  (35s)
+  re-parsed 40000/87254  (55s)
+  re-parsed 60000/87254  (86s)
+  re-parsed 80000/87254  (116s)
+events with recovered ts: 44130  (123s)
+reps: ['WB', 'EB', 'TWB', 'TEB']; fresh share of NVDA news: 61.9%  (124s)
+samples 2075  train/dev/test = 1458/251/366  (124s)
+
+test majority baseline = 0.5355  (n=366)
+WB-CNN (realigned): test acc=0.5410 mcc=+0.0602 | fresh-overnight days n=140 base=0.5143 acc=0.5286 mcc=+0.0907
+EB-CNN (realigned): test acc=0.5164 mcc=-0.0209 | fresh-overnight days n=140 base=0.5143 acc=0.4857 mcc=-0.0422
+TWB-CNN (realigned): test acc=0.5355 mcc=+0.0678 | fresh-overnight days n=140 base=0.5143 acc=0.4929 mcc=-0.0076
+TEB-CNN (realigned): test acc=0.5383 mcc=+0.0355 | fresh-overnight days n=140 base=0.5143 acc=0.5143 mcc=+0.0168

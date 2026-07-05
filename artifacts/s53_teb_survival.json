@@ -1,0 +1,163 @@
+{
+  "seed_rows": [
+    {
+      "seed": 0,
+      "dev_mcc": 0.09306848942014956,
+      "test_profit_always": 3562.93972293662
+    },
+    {
+      "seed": 1,
+      "dev_mcc": 0.09269624493721504,
+      "test_profit_always": 262.20756144992345
+    },
+    {
+      "seed": 2,
+      "dev_mcc": 0.09984210138718569,
+      "test_profit_always": -925.5222961609145
+    },
+    {
+      "seed": 3,
+      "dev_mcc": 0.11171909538752513,
+      "test_profit_always": 1260.4605170970194
+    }
+  ],
+  "ensemble_metrics": {
+    "dev_acc": 0.5298804780876494,
+    "dev_mcc": 0.04546663457394935,
+    "test_acc": 0.5273224043715847,
+    "test_mcc": 0.008873782988341588
+  },
+  "always": {
+    "name": "TEB-CNN always",
+    "threshold": null,
+    "n_days": 366,
+    "n_trades": 366,
+    "profit_total": 202.37619959860905,
+    "profit_per_trade": 0.5529404360617733,
+    "trade_sharpe_like": 0.045996037181599475,
+    "bootstrap_profit_ci95": [
+      -7109.014129050125,
+      266.2442831050298,
+      7229.8857568630665
+    ],
+    "bootstrap_prob_profit_le_0": 0.47126,
+    "yearly_profit": [
+      {
+        "period": "2025",
+        "n": 250,
+        "profit": 484.9949944961668
+      },
+      {
+        "period": "2026",
+        "n": 116,
+        "profit": -282.6187948975575
+      }
+    ],
+    "half_profit": [
+      {
+        "period": "first_half",
+        "n": 183,
+        "profit": -243.3252805124248
+      },
+      {
+        "period": "second_half",
+        "n": 183,
+        "profit": 445.7014801110335
+      }
+    ]
+  },
+  "beta_0_70": {
+    "name": "TEB-CNN beta=0.70",
+    "threshold": 0.7,
+    "n_days": 366,
+    "n_trades": 7,
+    "profit_total": -604.8074212284249,
+    "profit_per_trade": -86.40106017548928,
+    "trade_sharpe_like": -13.697751743306394,
+    "bootstrap_profit_ci95": [
+      -1336.2299792527592,
+      -575.1675805183786,
+      -35.266802195244026
+    ],
+    "bootstrap_prob_profit_le_0": 0.98446,
+    "yearly_profit": [
+      {
+        "period": "2025",
+        "n": 250,
+        "profit": -85.7517729791868
+      },
+      {
+        "period": "2026",
+        "n": 116,
+        "profit": -519.0556482492382
+      }
+    ],
+    "half_profit": [
+      {
+        "period": "first_half",
+        "n": 183,
+        "profit": -21.852293840487476
+      },
+      {
+        "period": "second_half",
+        "n": 183,
+        "profit": -582.9551273879375
+      }
+    ]
+  },
+  "randomization": {
+    "n": 100000,
+    "mean": -916.2338638290399,
+    "ci95": [
+      -6725.309412024498,
+      4907.590473701602
+    ],
+    "p_ge_always": 0.35339,
+    "p_ge_beta": 0.45817
+  },
+  "threshold_validation": {
+    "dev_best": {
+      "threshold": 0.5,
+      "profit": 6482.085766056616,
+      "trades": 251.0
+    },
+    "test_at_dev_best": {
+      "threshold": 0.5,
+      "profit": 202.37619959860905,
+      "trades": 366.0
+    },
+    "test_peek_best": {
+      "threshold": 0.57,
+      "profit": 3192.1543326568817,
+      "trades": 104.0
+    }
+  },
+  "multiple_testing": {
+    "n_models": 11,
+    "teb_existing_p": 0.234,
+    "min_existing_p": 0.234,
+    "teb_bonferroni_11_models": 1.0,
+    "teb_bonferroni_22_model_strategy_variants": 1.0,
+    "dev_best_by_mcc": {
+      "model": "WB-CNN",
+      "dev_acc": 0.5657370517928287,
+      "dev_mcc": 0.15751149369658438,
+      "test_acc": 0.5136612021857924,
+      "test_mcc": -0.002837960511756981
+    },
+    "test_best_by_mcc": {
+      "model": "TEB-CNN",
+      "dev_acc": 0.5617529880478087,
+      "dev_mcc": 0.11171909538752513,
+      "test_acc": 0.5546448087431693,
+      "test_mcc": 0.08415567657858812
+    },
+    "dev_best_test_simulation": {
+      "model": "WB-CNN",
+      "always_profit": 69.23819592058601,
+      "threshold_profit": 200.00000000000017,
+      "rand_mean": -891.9346320505354,
+      "p_value": 0.38
+    }
+  }
+}

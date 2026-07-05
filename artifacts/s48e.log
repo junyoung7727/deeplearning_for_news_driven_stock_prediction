@@ -1,0 +1,98 @@
+loaded N=187701 train=115863 test=71838  (0s)
+tabular (187701, 79), names 79  (1s)
+
+=== E1 permutation importance (AUC, dev) ===
+[UP5] top features by dAUC:
+   hl_5mu          27.92e-3
+   gap_open        19.03e-3
+   hl_prev          4.71e-3
+   hl_30mu          4.02e-3
+   volz_last        2.31e-3
+   r1_10mu          2.20e-3
+   r1_last          1.72e-3
+   r1_5mu           1.68e-3
+   hl_10sd          0.97e-3
+   hl_5mx           0.97e-3
+   hl_30sd          0.69e-3
+   hl_10mu          0.65e-3
+   hl_10mx          0.56e-3
+   r1_30mu          0.52e-3
+   hl20             0.51e-3
+   volz_30mn        0.43e-3
+   std20            0.42e-3
+   hit2_5mu         0.42e-3
+[DN5] top features by dAUC:
+   gap_open        30.67e-3
+   hl_5mu          17.27e-3
+   hl_prev          9.45e-3
+   r1_30mu          5.94e-3
+   hl_10mu          2.61e-3
+   r1_10mu          2.08e-3
+   r1_last          1.96e-3
+   r1_5mu           1.83e-3
+   hl_30mu          1.79e-3
+   gap_5mn          1.26e-3
+   gap_last         1.22e-3
+   volz_last        1.10e-3
+   std20            1.01e-3
+   volz_10sd        0.99e-3
+   hl_5sd           0.66e-3
+   hl_30mn          0.63e-3
+   r1_30mx          0.58e-3
+   hl_10mx          0.56e-3
+
+=== E2 conditional base rates (test only) ===
+gap bucket (<-2%,-2..0,0..2%,>2%) x vol quintile -> UP5 | DN5 | n
+  gap<-2  0.045/0.076/66 | 0.091/0.064/219 | 0.190/0.058/378 | 0.203/0.103/580 | 0.311/0.251/1248
+  -2..0   0.016/0.009/4702 | 0.035/0.014/4851 | 0.059/0.030/4915 | 0.087/0.059/4739 | 0.178/0.154/4591
+  0..+2   0.016/0.007/9443 | 0.032/0.013/9003 | 0.058/0.032/8602 | 0.090/0.053/8225 | 0.168/0.140/6987
+  gap>+2  0.108/0.166/157 | 0.170/0.221/294 | 0.169/0.188/473 | 0.187/0.256/823 | 0.383/0.402/1542
+day-of-week UP5: ['0.080', '0.088', '0.081', '0.084', '0.091']
+news presence: UP5 with=0.108 without=0.084 | DN5 with=0.082 without=0.062 (n_with=4248)
+/home/junyoung/dlfe/code/s48_explore.py:105: RuntimeWarning: Mean of empty slice
+  " ".join(f"{u[m][b==k].mean():.3f}" for k in range(4)) + " | DN5 " +
+/home/junyoung/dlfe/venv/lib/python3.14/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in divide
+  ret = ret.dtype.type(ret / rcount)
+/home/junyoung/dlfe/code/s48_explore.py:106: RuntimeWarning: Mean of empty slice
+  " ".join(f"{d[m][b==k].mean():.3f}" for k in range(4)), flush=True)
+novelty quartiles (hiVol, n=1577): UP5 0.157 0.187 nan 0.252 | DN5 0.132 0.142 nan 0.216
+novelty quartiles (loVol, n=2671): UP5 0.043 0.042 0.043 0.051 | DN5 0.027 0.024 0.019 0.029
+
+=== E3 market-day regime ===
+per-day UP5 rate: mean=0.097 std=0.072 p10=0.031 p90=0.170
+lag-1 autocorr: UP5 +0.411 DN5 +0.253
+corr(day mean vol, day UP5 rate)=+0.409, corr(day mean gap, day UP5)=-0.186, corr(day mean gap, day DN5)=-0.123
+corr(prev-day UP5 rate, day UP5 rate)=+0.411
+
+=== E4 ticker persistence (via ohlcv rebuild) ===
+tickers=605 corr(u5 early, u5 late)=+0.563 corr(d5)=+0.528
+
+=== E5 scaling headroom ===
+ticker-days valid: small=814536 big=815575 (current samples 187701 = small ex-warmup/limitup)
+big-cap rates: UP5=0.0723 DN5=0.0533 | small: UP5=0.0831 DN5=0.0602
+tickers: 626
+
+=== E6 s47 ENS error anatomy (test top-decile) ===
+[UP5] top10% n=7183 hit=0.322
+   gap        TP=+0.0086 FP=+0.0037 rest=+0.0002
+   std20      TP=+0.0705 FP=+0.0668 rest=+0.0217
+   hl_prev    TP=+0.1205 FP=+0.1010 rest=+0.0315
+   nov_mean   TP=+0.0767 FP=+0.0486 rest=+0.0410
+   has_over   TP=+0.0916 FP=+0.0581 rest=+0.0580
+   sent_mean  TP=+0.0393 FP=+0.0205 rest=+0.0091
+   volz_last  TP=+1.7619 FP=+1.5342 rest=+0.0214
+   hit2_30mu  TP=+0.5166 FP=+0.5288 rest=+0.2786
+[DN5] top10% n=7183 hit=0.319
+   gap        TP=+0.0196 FP=+0.0059 rest=-0.0004
+   std20      TP=+0.0686 FP=+0.0642 rest=+0.0220
+   hl_prev    TP=+0.1173 FP=+0.0961 rest=+0.0320
+   nov_mean   TP=+0.0802 FP=+0.0502 rest=+0.0408
+   has_over   TP=+0.0959 FP=+0.0616 rest=+0.0576
+   sent_mean  TP=+0.0446 FP=+0.0164 rest=+0.0092
+   volz_last  TP=+1.7490 FP=+1.4219 rest=+0.0304
+   hit2_30mu  TP=+0.5141 FP=+0.5190 rest=+0.2794
+
+=== E7 UP5/DN5 co-occurrence ===
+P(UP5)=0.1000 P(DN5)=0.0747 P(both)=0.0081 P(both|UP5)=0.0805
+by vol quintile: q0: U=0.024 D=0.013 B=0.001 | q1: U=0.051 D=0.030 B=0.001 | q2: U=0.081 D=0.054 B=0.002 | q3: U=0.125 D=0.090 B=0.006 | q4: U=0.246 D=0.210 B=0.033
+exploration done  (66s)

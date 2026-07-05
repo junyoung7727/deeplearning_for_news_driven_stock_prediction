@@ -1,0 +1,20 @@
+kept 36406 / 147183 samples  (3s)
+train 18302  dev 2989  test 15115
+    ep  0 dev_mcc=0.0000 best=0.0000
+    ep  3 dev_mcc=0.0056 best=0.0056
+    ep  4 dev_mcc=0.0146 best=0.0146
+    ep  9 dev_mcc=0.0169 best=0.0169
+    ep 10 dev_mcc=0.0079 best=0.0169
+    ep 20 dev_mcc=0.0009 best=0.0169
+
+KR SMALL-CAP EB-CNN, EVENT-DAY-ONLY TRAINING (dev_mcc=0.0169):
+  [ANY-event-in-window] n=15115 base=0.5681 acc=0.5535 mcc=+0.0014
+     conf top 50%: acc=0.5642 mcc=+0.0051 base=0.5680 (n=7561)
+     conf top 30%: acc=0.5624 mcc=+0.0060 base=0.5657 (n=4548)
+     conf top 20%: acc=0.5585 mcc=+0.0101 base=0.5608 (n=3026)
+     conf top 10%: acc=0.5614 mcc=+0.0133 base=0.5627 (n=1514)
+  [EVENT-days (prior trading day)] n=2146 base=0.5443 acc=0.5266 mcc=+0.0025
+     conf top 50%: acc=0.5396 mcc=+0.0041 base=0.5489 (n=1073)
+     conf top 30%: acc=0.5295 mcc=+0.0118 base=0.5326 (n=644)
+     conf top 20%: acc=0.5302 mcc=+0.0325 base=0.5256 (n=430)
+     conf top 10%: acc=0.5628 mcc=+0.0035 base=0.5767 (n=215)

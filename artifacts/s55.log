@@ -1,0 +1,25 @@
+loaded title-emb cache: 1994575 titles dim 768  (6s)
+buckets session 203488 overnight 225402 daily 312484  (27s)
+kept samples 1098241  has_over 19.8%  (112s)
+H=768 train 523409 dev 105899 test 468933 test_gap_up=0.4407  (112s)
+
+===== TEB V1_session dim=2304 =====
+  [ALL] DIR n=468933 base=0.5593 acc=0.5605 mcc=+0.0541
+  [ALL] SIZE n=468933 IC=+0.0177 dir_acc=0.4468
+  [OVERNIGHT] DIR n=91294 base=0.5027 acc=0.5238 mcc=+0.0495
+  [OVERNIGHT] SIZE n=91294 IC=-0.0184 dir_acc=0.4980
+
+===== TEB V2_overnight dim=2304 =====
+  [ALL] DIR n=468933 base=0.5593 acc=0.5686 mcc=+0.0702
+  [ALL] SIZE n=468933 IC=+0.0321 dir_acc=0.4898
+  [OVERNIGHT] DIR n=91294 base=0.5027 acc=0.5484 mcc=+0.0997
+  [OVERNIGHT] SIZE n=91294 IC=+0.0544 dir_acc=0.4977
+
+===== TEB V3_split dim=3072 =====
+  [ALL] DIR n=468933 base=0.5593 acc=0.5668 mcc=+0.0686
+  [ALL] SIZE n=468933 IC=+0.0283 dir_acc=0.4680
+  [OVERNIGHT] DIR n=91294 base=0.5027 acc=0.5457 mcc=+0.0917
+  [OVERNIGHT] SIZE n=91294 IC=+0.0522 dir_acc=0.5084
+XAI titles resolved 39/39  (341s)
+XAI best 12 worst 12  (341s)
+saved artifacts/s55_kr_teb_xai.json  (341s)

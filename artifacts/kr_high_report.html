@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>KR 소형주 고가예측 — 데이터·모델 구조 명세</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Malgun Gothic", "Noto Sans KR", sans-serif; font-size: 10.5px;
+         color: #1a1a1a; line-height: 1.55; margin: 0; }
+  h1 { font-size: 21px; margin: 0 0 2px; }
+  h2 { font-size: 14.5px; margin: 22px 0 8px; padding: 5px 9px; background: #10365c; color: #fff;
+       border-radius: 3px; page-break-after: avoid; }
+  h3 { font-size: 12px; margin: 14px 0 5px; color: #10365c; page-break-after: avoid; }
+  .sub { color: #555; font-size: 10.5px; margin-bottom: 4px; }
+  table { border-collapse: collapse; width: 100%; margin: 6px 0 10px; page-break-inside: avoid; }
+  th, td { border: 1px solid #b9c4d0; padding: 3.5px 7px; text-align: left; vertical-align: top; }
+  th { background: #e8eef5; font-weight: 700; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  code, .mono { font-family: Consolas, "D2Coding", monospace; font-size: 9.8px; background: #f2f4f7;
+                padding: 0 3px; border-radius: 2px; }
+  .codeblock { font-family: Consolas, "D2Coding", monospace; font-size: 9.6px; background: #f6f8fa;
+               border: 1px solid #d7dde4; border-radius: 4px; padding: 8px 10px; margin: 6px 0 10px;
+               white-space: pre; overflow: hidden; page-break-inside: avoid; }
+  .note { background: #fff8e6; border-left: 3px solid #e5a800; padding: 6px 10px; margin: 8px 0;
+          font-size: 10px; page-break-inside: avoid; }
+  .flow { display: flex; align-items: stretch; gap: 5px; margin: 10px 0; page-break-inside: avoid; }
+  .fbox { flex: 1; border: 1.4px solid #10365c; border-radius: 5px; padding: 6px 7px; background: #f4f8fc;
+          font-size: 9.5px; text-align: center; }
+  .fbox b { display: block; font-size: 10.3px; color: #10365c; margin-bottom: 2px; }
+  .arr { align-self: center; font-size: 14px; color: #10365c; font-weight: 700; }
+  .dim { color: #777; }
+  .tl { position: relative; height: 92px; margin: 14px 6px 6px; page-break-inside: avoid; }
+  .tlbar { position: absolute; top: 44px; left: 0; right: 0; height: 4px; background: #b9c4d0; border-radius: 2px; }
+  .seg { position: absolute; top: 40px; height: 12px; border-radius: 3px; }
+  .tick { position: absolute; top: 30px; width: 2px; height: 32px; background: #10365c; }
+  .tlab { position: absolute; top: 8px; font-size: 9px; text-align: center; width: 110px; margin-left: -55px; color: #10365c; font-weight: 700; }
+  .slab { position: absolute; top: 62px; font-size: 9px; text-align: center; color: #333; }
+  .kpi { display: flex; gap: 8px; margin: 8px 0; }
+  .kbox { flex: 1; border: 1px solid #b9c4d0; border-radius: 5px; padding: 6px 8px; background: #f8fafc; }
+  .kbox .v { font-size: 15px; font-weight: 800; color: #10365c; }
+  .kbox .k { font-size: 9px; color: #555; }
+  .pagebreak { page-break-before: always; }
+  .small { font-size: 9.3px; color: #555; }
+  .tag { display: inline-block; background: #dfe9f3; color: #10365c; border-radius: 3px;
+         padding: 0 5px; font-size: 9px; font-weight: 700; margin-right: 3px; }
+</style>
+</head>
+<body>
+
+<h1>KR 소형주 이벤트 기반 고가예측 — 입력 데이터·모델 구조 명세</h1>
+<div class="sub">파이프라인 <code>s39</code>(OHLCV) + <code>s41</code>(원격 GPU, 정밀 링크·임베딩·학습) · 데이터 기간 2024-06-18 ~ 2026-06-18 · 작성 2026-07-02 · 모든 표의 값은 실제 데이터에서 추출한 실측 예시</div>
+
+<h2>0. 태스크 정의와 전체 흐름</h2>
+<p><b>예측 문제</b>: 당일 시가(09:00 KST) 시점에, 오늘 <b>고가가 시가 대비 +k% 에 도달하는가</b>를 예측한다.</p>
+<div class="codeblock">y_k(종목 t, 일 d) = 1[ high(t,d) ≥ open(t,d) × (1+k) ],   k ∈ {2%, 3%, 5%}
+판정 시점 = d일 09:00 시가(사용 정보는 그 이전 것만) · 제외: 시가 상한잠금(전일종가 대비 ≥ +29.5%), 거래정지(volume=0)
+PNL(k) = [ 도달 시 +k, 미도달 시 close/open − 1 ] − 0.30%(수수료+세금+슬리피지)</div>
+<div class="flow">
+  <div class="fbox"><b>① 원천 데이터</b>뉴스 타이틀 355만<br>유니버스 2,876<br>OHLCV 30.4만행</div><div class="arr">→</div>
+  <div class="fbox"><b>② 종목-뉴스 링크</b>정밀 이름 매칭<br>46.1만 링크</div><div class="arr">→</div>
+  <div class="fbox"><b>③ 시간 정렬</b>eff / info / fresh<br>(세션 09:00–15:30)</div><div class="arr">→</div>
+  <div class="fbox"><b>④ 이벤트 추출</b>Kiwi SVO<br>12.8만 이벤트</div><div class="arr">→</div>
+  <div class="fbox"><b>⑤ 임베딩</b>w2v 100d<br>NTN 100d</div><div class="arr">→</div>
+  <div class="fbox"><b>⑥ 샘플 텐서</b>S·M·L·VOLF<br>144,229 샘플</div><div class="arr">→</div>
+  <div class="fbox"><b>⑦ 모델</b>EB-CNN / VOL-LR<br>/ STACK</div>
+</div>
+
+<h2>1. 원천 데이터 — 실제 행 예시</h2>
+
+<h3>A. BigKinds 뉴스 타이틀 (원격 <span class="mono">~/bk_slim/slim_0*.parquet</span>, 8샤드 22M행 중 2024-01-01+ 355만 행 사용)</h3>
+<table>
+<tr><th>news_id</th><th>title</th><th class="num">published_at (파생)</th></tr>
+<tr><td class="mono">01100801.20260609105058001</td><td>대공황 이후 첫 '인구 순유출'… 악몽이 된 아메리칸 드림</td><td class="num mono">2026-06-09 10:50:58</td></tr>
+<tr><td class="mono">01101202.20260609110311001</td><td>[단독] 코오롱 오너 4세 이규호, 코오롱스페이스웍스 이사회 합류</td><td class="num mono">2026-06-09 11:03:11</td></tr>
+</table>
+<div class="codeblock">news_id 구조:   01100801 . 20260609105058 001
+                └언론사코드┘  └YYYYMMDDHHMMSS┘ └일련번호┘   →  타임스탬프(초 단위, KST)를 news_id에서 직접 파싱</div>
+<div class="note">타임스탬프는 실제 발행시각(분·초 균일분포 확인, 정시 반올림 3.6%뿐) — 미국 FMP 피드(37.9%가 :00초, 배치 수집)와 달리 <b>세션 컷오프 정렬이 가능한 품질</b>.</div>
+
+<h3>B. 종목 유니버스 (<span class="mono">kr_universe_enriched.parquet</span>, 2,876행 중 가격보유 626종목 사용)</h3>
+<table>
+<tr><th>ticker</th><th>name</th><th>market</th><th>aliases</th></tr>
+<tr><td class="mono">005930</td><td>삼성전자</td><td>KOSPI</td><td class="mono">[삼성전자]</td></tr>
+<tr><td class="mono">000660</td><td>SK하이닉스</td><td>KOSPI</td><td class="mono">[sk하이닉스, 하이닉스]</td></tr>
+<tr><td class="mono">352820</td><td>하이브</td><td>KOSPI</td><td class="mono">[빅히트, 빅히트엔터테인먼트, 하이브]</td></tr>
+</table>
+
+<h3>C. 일봉 OHLCV (pykrx 수집, <span class="mono">kr_ohlcv.parquet</span> — 303,788행 × 626종목 × 484거래일)</h3>
+<table>
+<tr><th>ticker</th><th>date</th><th class="num">open</th><th class="num">high</th><th class="num">low</th><th class="num">close</th><th class="num">volume</th><th class="num">y₂% = 1[high≥open×1.02]</th></tr>
+<tr><td class="mono">005930</td><td class="mono">2024-06-18</td><td class="num">78,700</td><td class="num">80,200</td><td class="num">78,600</td><td class="num">79,800</td><td class="num">18,207,598</td><td class="num">1 (80,200 ≥ 80,274? → 0.019 → <b>0</b>)</td></tr>
+<tr><td class="mono">005930</td><td class="mono">2024-06-19</td><td class="num">81,100</td><td class="num">82,500</td><td class="num">80,500</td><td class="num">81,200</td><td class="num">24,168,863</td><td class="num">82,500 ≥ 82,722? → 0.017 → <b>0</b></td></tr>
+<tr><td class="mono">005930</td><td class="mono">2024-06-20</td><td class="num">81,500</td><td class="num">82,200</td><td class="num">81,200</td><td class="num">81,600</td><td class="num">20,288,913</td><td class="num">0.0086 → <b>0</b></td></tr>
+</table>
+<div class="small">라벨은 소형주(시가총액 하위 절반 313종목)에만 부여. 대형주 예시는 스키마 설명용.</div>
+
+<h3>D. 시가총액 (<span class="mono">kr_market_cap_daily.parquet</span> — 소형주 분할 기준: 종목별 중앙값이 전체 중앙값 이하)</h3>
+<table>
+<tr><th>ticker</th><th>trade_date</th><th class="num">market_cap (원)</th></tr>
+<tr><td class="mono">000020</td><td class="mono">2023-12-01</td><td class="num">263,393,762,100</td></tr>
+</table>
+
+<h2>2. 종목-뉴스 링크 — 정밀 매칭 규칙</h2>
+<p>제목에 회사명/별칭이 등장하면 링크. 단순 부분문자열 매칭의 오링크(SKT⊃KT, 하이브리드⊃하이브, 원화표기 "한화 3억달러", 일반명사 "대상")를 4중 규칙으로 제거:</p>
+<table>
+<tr><th style="width:20%">규칙</th><th>내용</th><th>제거 예 (실측)</th></tr>
+<tr><td><span class="tag">R1</span>ASCII 단어경계</td><td><code>(?&lt;![0-9A-Za-z&amp;])name(?![0-9A-Za-z&amp;])</code></td><td>"S<b>KT</b>", "<b>KT</b>&amp;G", "<b>KT</b>X" ↛ KT(030200)</td></tr>
+<tr><td><span class="tag">R2</span>한글 토큰경계</td><td>이름이 Kiwi 연속 토큰 결합과 정확히 일치해야 함</td><td>"<b>하이브</b>리드"(1토큰) ↛ 하이브(352820)</td></tr>
+<tr><td><span class="tag">R3</span>동음이의 cue</td><td>단독 NNG(일반명사) 태그 이름은 기업 문맥어(주가·실적·인수·공시…) 필요</td><td>"지원 <b>동원</b>" 류 일반명사 사용 제거</td></tr>
+<tr><td><span class="tag">R4</span>tight 패턴</td><td>대상·한화는 <code>㈜대상|대상그룹|한화그룹|㈜한화…</code>만 허용</td><td>"<b>한화</b> 3억 달러 수주"(통화) ↛ 한화(000880)</td></tr>
+</table>
+<div class="kpi">
+  <div class="kbox"><div class="v">671,081 → 461,071</div><div class="k">(ticker,news) 링크: 원시 → 정밀 (−31%)</div></div>
+  <div class="kbox"><div class="v">72,789</div><div class="k">경계 규칙(R1·R2) 거절 쌍</div></div>
+  <div class="kbox"><div class="v">109,994</div><div class="k">동음이의(R3·R4) 거절 쌍</div></div>
+  <div class="kbox"><div class="v">610 / 435,250</div><div class="k">링크된 종목 수 / 고유 뉴스 수</div></div>
+</div>
+<h3>링크 테이블 실제 행 (<span class="mono">kr41_corpus.pkl → link</span>)</h3>
+<table>
+<tr><th>ticker</th><th>ts (발행시각)</th><th>news_id</th></tr>
+<tr><td class="mono">000120</td><td class="mono">2024-01-22 00:11:03</td><td class="mono">02100701.20240122001103001</td></tr>
+<tr><td class="mono">001060</td><td class="mono">2024-01-22 00:11:03</td><td class="mono">02100701.20240122001103001</td></tr>
+<tr><td class="mono">069960</td><td class="mono">2024-01-22 20:46:46</td><td class="mono">02100701.20240122204646001</td></tr>
+<tr><td class="mono">042660</td><td class="mono">2024-01-22 19:46:33</td><td class="mono">02100701.20240122194633001</td></tr>
+</table>
+<div class="small">한 뉴스가 여러 종목을 언급하면 여러 링크가 생김(1행·2행 = 같은 뉴스 → 두 종목).</div>
+
+<div class="pagebreak"></div>
+<h2>3. 시간 정렬 — eff / info / fresh (누수 차단의 핵심)</h2>
+<div class="tl">
+  <div class="tlbar"></div>
+  <div class="seg" style="left:8%; width:24%; background:#9db8d4;" ></div>
+  <div class="seg" style="left:32%; width:36%; background:#ffd685;"></div>
+  <div class="seg" style="left:68%; width:24%; background:#9db8d4;"></div>
+  <div class="tick" style="left:8%"></div><div class="tlab" style="left:8%">전일(a) 09:00 시가</div>
+  <div class="tick" style="left:32%"></div><div class="tlab" style="left:32%">전일(a) 15:30 마감</div>
+  <div class="tick" style="left:68%"></div><div class="tlab" style="left:68%">당일(d) 09:00 시가<br>= 판정 시점</div>
+  <div class="tick" style="left:92%"></div><div class="tlab" style="left:92%">당일(d) 15:30 마감</div>
+  <div class="slab" style="left:11%">전일 장중 뉴스 (stale, 전일 종가에 반영됨)</div>
+  <div class="slab" style="left:39%"><b>오버나이트 창 = fresh</b> (마감후·심야·주말·개장전)</div>
+  <div class="slab" style="left:71%">당일 장중 (사용 불가)</div>
+</div>
+<div class="codeblock">eff(τ)  = 시가(09:00)가 τ 이후인 첫 거래일   ← "이 뉴스로 처음 매매 가능한 날"
+info(τ) = 마감(15:30)이 τ 이후인 첫 거래일   ← "이 뉴스가 종가에 반영 완료되는 날"
+fresh   = (eff == info)                      ← 마감후~다음 시가 사이 발행 = 어떤 종가에도 아직 미반영</div>
+<table>
+<tr><th>발행시각 τ (예)</th><th>eff</th><th>info</th><th>fresh</th><th>해석</th></tr>
+<tr><td class="mono">금 14:00 (장중)</td><td>월</td><td>금</td><td class="mono">✗</td><td>금요일 종가에 이미 반영 → 월요일엔 stale (S 제외, M·L에만)</td></tr>
+<tr><td class="mono">금 18:30 (마감후)</td><td>월</td><td>월</td><td class="mono">✓</td><td>월요일 시가 전 어떤 종가에도 미반영 → 월요일 S에 포함</td></tr>
+<tr><td class="mono">토 11:00 (주말)</td><td>월</td><td>월</td><td class="mono">✓</td><td>주말 뉴스 → 월요일 오버나이트 창</td></tr>
+<tr><td class="mono">월 08:20 (개장전)</td><td>월</td><td>월</td><td class="mono">✓</td><td>당일 개장전 뉴스 → 당일 S에 포함</td></tr>
+</table>
+<div class="note">구(舊) 파이프라인(s34)은 "전일 달력날짜" 키잉이라 <b>stale 뉴스 53~68%가 피처를 희석</b>하고 개장전·주말 뉴스는 누락됐음 — 본 정렬이 그 수정본. 사용 링크 131,866건 중 fresh 62.3%.</div>
+
+<h2>4. 텍스트 → 이벤트 (Kiwi 형태소 + 조사 기반 SVO)</h2>
+<h3>실제 토큰화 예시</h3>
+<div class="codeblock">제목: "삼성전자가 차세대 HBM4를 공개했다"
+토큰: 삼성전자/NNP  가/JKS  차세대/NNG  HBM/SL  4/SN  를/JKO  공개/NNG  하/XSV  었/EP  다/EF
+                    └주격→S표시┘                        └목적격→O표시┘  └동작명사+하 →술어┘</div>
+<table>
+<tr><th style="width:22%">추출 규칙</th><th>내용</th></tr>
+<tr><td>명사구(NP) 병합</td><td>연속 명사류(NNG·NNP·SL·SN·SH)를 하나의 NP로 병합</td></tr>
+<tr><td>주어/목적어 표시</td><td>NP 뒤 조사: JKS(가·이)·JX(은·는·도) → 주어 후보, JKO(을·를) → 목적어 후보</td></tr>
+<tr><td>술어</td><td>동작명사+하/되(XSV) 또는 동사·형용사 어간(VV·VA), 마지막 것 채택</td></tr>
+<tr><td>이벤트 성립</td><td>NP ≥ 2개 + 술어 ≥ 1개 → E = (O1, P, O2), 미성립 시 이벤트 없음</td></tr>
+</table>
+<h3>산출 이벤트 (실측)</h3>
+<table>
+<tr><th>출처</th><th>O1 (주체)</th><th>P (행위)</th><th>O2 (대상)</th></tr>
+<tr><td>데모 제목</td><td class="mono">[삼성전자]</td><td class="mono">[공개]</td><td class="mono">[차세대, HBM, 4]</td></tr>
+<tr><td class="mono">02100701.20240122182140001</td><td class="mono">[진에어]</td><td class="mono">[열]</td><td class="mono">[우수, 직원, 표창, 수여]</td></tr>
+</table>
+<div class="kpi">
+  <div class="kbox"><div class="v">127,606 / 435,250</div><div class="k">이벤트 추출 성공 뉴스 (29.3%) — 나머지는 무동사 명사구 제목</div></div>
+  <div class="kbox"><div class="v">124,190</div><div class="k">임베딩 보유 뉴스 (전 인자가 어휘집에 존재)</div></div>
+</div>
+
+<h2>5. 임베딩 — Skip-gram 100d → NTN 100d</h2>
+<h3>① 단어 임베딩 (skip-gram + negative sampling, GPU)</h3>
+<div class="codeblock">코퍼스 = 링크된 제목의 내용어(명사류+동사·형용사) · 어휘집 V = 24,859 (빈도 ≥ 5)
+        상위 어휘 실측: 목표, 현대차, 1, 삼성전자, 리포트, 분기, 브리핑, 2 …
+쌍 800만 (window≤5) · 4 epoch · loss 2.11→1.89 · 파라미터 2×V×100 ≈ 497만</div>
+<h3>② 이벤트 임베딩 (Neural Tensor Network, Ding et al. 2015 Eq.1)</h3>
+<div class="codeblock">입력: O1, P, O2 ∈ R¹⁰⁰ (각 인자 = 구성 단어벡터 평균)
+R1 = tanh( O1ᵀ T1 P + W1[O1;P] + b1 )        T1 ∈ R^(100×100×100)
+R2 = tanh( Pᵀ  T2 O2 + W2[P;O2] + b2 )        T2 ∈ R^(100×100×100)
+U  = tanh( R1ᵀ T3 R2 + W3[R1;R2] + b3 )       T3 ∈ R^(100×100×100)   → U = 이벤트 벡터(100d)
+학습: margin loss  max(0, 1 − s(E) + s(E^r)) + 10⁻⁴‖Φ‖²  (E^r = 인자 1개를 무작위 단어로 교체)
+파라미터 ≈ 306만 · 실측 수렴: hinge 0.22, margin충족 78%
+산출: 뉴스별 100d 벡터 124,190개 (학습분포 기준 차원별 표준화) — 실측 예: [−0.004, −0.005, −0.003, −0.006, −0.025, 0.003, …]</div>
+
+<div style="height:6px"></div>
+<h2>6. 모델 입력 텐서 — "모델이 실제로 받는 것"</h2>
+<table>
+<tr><th>이름</th><th>shape (실측)</th><th>내용</th><th>실제 값 예시 (샘플 DT=2024-09-09)</th></tr>
+<tr><td class="mono"><b>S</b></td><td class="mono">(144,229, 100)</td><td>당일 <b>오버나이트 fresh</b> 뉴스 이벤트 벡터 평균 (없으면 0)</td><td class="mono">[−0.004, −0.005, −0.003, −0.008, 0.013, 0.003, …]</td></tr>
+<tr><td class="mono"><b>M</b></td><td class="mono">(144,229, 7, 100)</td><td>직전 7거래일 <b>info-day</b> 벡터 시퀀스 (중기 창)</td><td class="mono">7×100 행렬, 뉴스 없는 날 = 0행</td></tr>
+<tr><td class="mono"><b>L</b></td><td class="mono">(144,229, 30, 100)</td><td>직전 30거래일 info-day 시퀀스 (장기 창)</td><td class="mono">30×100 행렬</td></tr>
+<tr><td class="mono"><b>VOLF</b></td><td class="mono">(144,229, 5)</td><td>[갭 open/prevClose−1, 20d평균 (H−L)/C, 20d 수익률 std, 전일 (H−L)/C, |r(d−2)|] — 전부 시가 시점 기지(旣知)</td><td class="mono">[−0.0052, 0.0211, 0.0121, 0.0262, 0.0205]</td></tr>
+<tr><td class="mono"><b>HIT</b></td><td class="mono">(144,229, 3)</td><td>라벨 y_k, k=2·3·5%</td><td class="mono">[0, 0, 0]</td></tr>
+<tr><td class="mono"><b>PNL</b></td><td class="mono">(144,229, 3)</td><td>시가매수·TP/종가청산 순손익 (비용 0.30% 차감)</td><td class="mono">[+0.0023, +0.0023, +0.0023]</td></tr>
+</table>
+<div class="kpi">
+  <div class="kbox"><div class="v">144,229</div><div class="k">전체 샘플 (소형주 313종목 × 거래일)</div></div>
+  <div class="kbox"><div class="v">1.3% / 22.1%</div><div class="k">오버나이트 뉴스 보유 / 30일 창 내 뉴스 보유</div></div>
+  <div class="kbox"><div class="v">16,628 / 2,359 / 12,833</div><div class="k">train / dev / test (뉴스보유 샘플만, 날짜 60/40 분할 + train 말미 15% dev)</div></div>
+</div>
+
+<h2>7. 모델 구조 3종</h2>
+<h3>① EB-CNN (뉴스 전용 — Ding et al. 2015 예측부 구조)</h3>
+<div class="flow">
+  <div class="fbox"><b>L (30×100)</b>장기 창</div>
+  <div class="arr">→</div>
+  <div class="fbox"><b>Conv1d(100→64, k=3)</b>+ tanh + max-over-time<span class="dim"> → 64</span></div>
+  <div class="arr">→</div>
+  <div class="fbox" style="flex:1.3"><b>concat [64+64+100] = 228</b>↓<br>FC 228→100 + sigmoid<br>↓ dropout 0.5<br>FC 100→1 + sigmoid<span class="dim"> → P(hit)</span></div>
+</div>
+<div class="flow" style="margin-top:-4px">
+  <div class="fbox"><b>M (7×100)</b>중기 창 → 동일 Conv → 64</div>
+  <div class="fbox"><b>S (100)</b>오버나이트 → 직결</div>
+  <div class="fbox" style="border-style:dashed"><b>파라미터 ≈ 10.2만</b>Conv 3.9만 + FC 2.3만 + NTN/w2v는 동결(선행학습)</div>
+</div>
+<div class="codeblock">학습: BCE loss · Adam lr=1e-3, weight_decay=1e-5 · batch 128 · 최대 120 epoch
+      dev-MCC 기준 best epoch 선택(patience 12) · seed 2개 앙상블(확률 평균) · GPU(RTX 5060)</div>
+<h3>② VOL-LR (변동성 베이스라인)</h3>
+<div class="codeblock">로지스틱 회귀:  P(hit) = σ( w·VOLF + b )   — 5개 피처만 사용, 뉴스 불사용</div>
+<h3>③ STACK (뉴스 + 변동성 결합)</h3>
+<div class="codeblock">로지스틱 회귀:  P(hit) = σ( w·[VOLF, p_CNN] + b )   — 6입력, 누수 방지 위해 dev 셋에서만 적합</div>
+
+<h2>8. 결과 요약 (walk-forward OOS: 2025-08 → 2026-06)</h2>
+<table>
+<tr><th class="num">k</th><th>모델</th><th>평가셋</th><th class="num">acc</th><th class="num">MCC</th><th class="num">top-10% 신뢰도 hit-rate (base)</th><th class="num">binom p</th></tr>
+<tr><td class="num">2%</td><td>VOL-LR</td><td>전체 n=12,833</td><td class="num"><b>0.714</b></td><td class="num">+0.26</td><td class="num">0.656 (0.319)</td><td class="num">7e−135</td></tr>
+<tr><td class="num">2%</td><td>STACK</td><td>오버나이트 n=749</td><td class="num">0.684</td><td class="num">+0.29</td><td class="num"><b>0.865</b> (0.371)</td><td class="num">2e−18</td></tr>
+<tr><td class="num">3%</td><td>VOL-LR</td><td>오버나이트</td><td class="num"><b>0.809</b></td><td class="num"><b>+0.43</b></td><td class="num">0.784 (0.252)</td><td class="num">2e−21</td></tr>
+<tr><td class="num">3%</td><td>STACK</td><td>오버나이트</td><td class="num">0.764</td><td class="num">+0.21</td><td class="num">0.811 (0.252)</td><td class="num">1e−23</td></tr>
+<tr><td class="num">5%</td><td>VOL-LR</td><td>오버나이트</td><td class="num"><b>0.880</b></td><td class="num">+0.45</td><td class="num">0.703 (0.155)</td><td class="num">7e−26</td></tr>
+<tr><td class="num">5%</td><td>EB-CNN(뉴스만)</td><td>오버나이트</td><td class="num">0.845</td><td class="num">0.00</td><td class="num">0.365 (0.155)</td><td class="num">8e−06</td></tr>
+</table>
+<div class="note"><b>해석</b>: ① 고가예측은 정확도 70%+·MCC +0.26~+0.45로 실질 성립(다수클래스 착시 아님). ② 예측력의 주원은 변동성·갭 피처, 뉴스는 오버나이트 날에 유의한 추가 신호(순수 뉴스 셀 p≤10⁻³). ③ <b>예측력 ≠ 수익</b>: 시가매수·네이키드 TP 전략은 비용 0.30% 반영 시 대부분 음(−)EV(미도달일 종가 하락이 상쇄; SL−3%는 비관적 체결 가정에서 악화). 양(+)EV는 뉴스-선택 소표본 셀뿐(k=5% EB-CNN top-10%: +0.85%/거래, n=74). 다음 단계 = 분봉 데이터로 TP/SL 체결순서 해상.</div>
+<div class="small">근거 파일: <span class="mono">artifacts/s41b.log</span>(전체 지표) · <span class="mono">artifacts/kr_ohlcv.parquet</span> · 원격 <span class="mono">~/dlfe/artifacts/kr41_*</span> · 코드 <span class="mono">s39_kr_ohlcv.py, s41_kr_high_remote.py</span></div>
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+{
+  "metrics": [
+    {
+      "model": "Luss[2012] (BoW+SVM)",
+      "dev_acc": 0.5219123505976095,
+      "dev_mcc": 0.01056311585772651,
+      "test_acc": 0.5218579234972678,
+      "test_mcc": -0.004899959575500252
+    },
+    {
+      "model": "WB-NN",
+      "dev_acc": 0.5537848605577689,
+      "dev_mcc": 0.0,
+      "test_acc": 0.5355191256830601,
+      "test_mcc": 0.0
+    },
+    {
+      "model": "WB-CNN",
+      "dev_acc": 0.5657370517928287,
+      "dev_mcc": 0.15751149369658438,
+      "test_acc": 0.5136612021857924,
+      "test_mcc": -0.002837960511756981
+    },
+    {
+      "model": "E-NN",
+      "dev_acc": 0.5776892430278885,
+      "dev_mcc": 0.1169447533875914,
+      "test_acc": 0.5245901639344263,
+      "test_mcc": -0.014953298441744393
+    },
+    {
+      "model": "E-CNN",
+      "dev_acc": 0.5737051792828686,
+      "dev_mcc": 0.14285857409611466,
+      "test_acc": 0.5027322404371585,
+      "test_mcc": -0.0269936244025257
+    },
+    {
+      "model": "EB-NN",
+      "dev_acc": 0.549800796812749,
+      "dev_mcc": 0.013215528586089122,
+      "test_acc": 0.5437158469945356,
+      "test_mcc": 0.0606656812607759
+    },
+    {
+      "model": "EB-CNN",
+      "dev_acc": 0.5617529880478087,
+      "dev_mcc": 0.07776872083368482,
+      "test_acc": 0.5409836065573771,
+      "test_mcc": 0.07959171834405435
+    },
+    {
+      "model": "TWB-NN",
+      "dev_acc": 0.5577689243027888,
+      "dev_mcc": 0.07045768740375825,
+      "test_acc": 0.5355191256830601,
+      "test_mcc": 0.005279042543228094
+    },
+    {
+      "model": "TWB-CNN",
+      "dev_acc": 0.5856573705179283,
+      "dev_mcc": 0.14467497327336473,
+      "test_acc": 0.5382513661202186,
+      "test_mcc": 0.04953265536194311
+    },
+    {
+      "model": "TEB-NN",
+      "dev_acc": 0.4701195219123506,
+      "dev_mcc": 0.1172452272867994,
+      "test_acc": 0.4726775956284153,
+      "test_mcc": 0.062410011435319004
+    },
+    {
+      "model": "TEB-CNN",
+      "dev_acc": 0.5617529880478087,
+      "dev_mcc": 0.11171909538752513,
+      "test_acc": 0.5546448087431693,
+      "test_mcc": 0.08415567657858812
+    }
+  ],
+  "simulation": [
+    {
+      "model": "Luss[2012] (BoW+SVM)",
+      "always_profit": -1859.7688963079333,
+      "threshold_profit": -80.12784955554352,
+      "rand_mean": -891.9346320505354,
+      "p_value": 0.64
+    },
+    {
+      "model": "WB-NN",
+      "always_profit": -925.5222961609145,
+      "threshold_profit": 0.0,
+      "rand_mean": -891.9346320505354,
+      "p_value": 0.506
+    },
+    {
+      "model": "WB-CNN",
+      "always_profit": 69.23819592058601,
+      "threshold_profit": 200.00000000000017,
+      "rand_mean": -891.9346320505354,
+      "p_value": 0.38
+    },
+    {
+      "model": "E-NN",
+      "always_profit": -1835.9639168660187,
+      "threshold_profit": 0.0,
+      "rand_mean": -891.9346320505354,
+      "p_value": 0.637
+    },
+    {
+      "model": "E-CNN",
+      "always_profit": -2350.6669303704693,
+      "threshold_profit": 1702.8412340235275,
+      "rand_mean": -891.9346320505354,
+      "p_value": 0.695
+    },
+    {
+      "model": "EB-NN",
+      "always_profit": 41.29053641983842,
+      "threshold_profit": 0.0,
+      "rand_mean": -891.9346320505354,
+      "p_value": 0.384
+    },
+    {
+      "model": "EB-CNN",
+      "always_profit": -585.8152330042087,
+      "threshold_profit": 0.0,
+      "rand_mean": -891.9346320505354,
+      "p_value": 0.464
+    },
+    {
+      "model": "TWB-NN",
+      "always_profit": -1190.65865568882,
+      "threshold_profit": 0.0,
+      "rand_mean": -891.9346320505354,
+      "p_value": 0.546
+    },
+    {
+      "model": "TWB-CNN",
+      "always_profit": -1608.732934577725,
+      "threshold_profit": -1749.008718715387,
+      "rand_mean": -891.9346320505354,
+      "p_value": 0.604
+    },
+    {
+      "model": "TEB-NN",
+      "always_profit": -818.3416066520881,
+      "threshold_profit": 0.0,
+      "rand_mean": -891.9346320505354,
+      "p_value": 0.491
+    },
+    {
+      "model": "TEB-CNN",
+      "always_profit": 1260.4605170970194,
+      "threshold_profit": 968.0986615330654,
+      "rand_mean": -891.9346320505354,
+      "p_value": 0.234
+    }
+  ],
+  "n_test": 366,
+  "test_up_rate": 0.5355191256830601
+}

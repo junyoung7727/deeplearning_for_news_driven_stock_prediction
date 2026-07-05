@@ -1,0 +1,35 @@
+loaded 5min tickers=89  (6s)
+train 2022-11-01..2024-08-19 test 2024-08-19..end  (6s)
+cache days=12551 candidates=12551  (20s)
+
+[A_open] TRAIN best: entry=open(None) SL=4% k=3 score>=0.8 -> train Sharpe=0.61 CAGR=+5.7%
+[A_open OOS] n=450 final=0.846 CAGR=-8.8% Sharpe=-0.63 MDD=-20.9% win=0.464 tp_rate=0.304 worstHit=-0.87%eq straddle=0.000 reasons={'sl': 0.36, 'close': 0.34, 'tp': 0.3}
+
+[B_dip] TRAIN best: entry=dip(0.005) SL=3% k=3 score>=0.8 -> train Sharpe=0.18 CAGR=+1.2%
+[B_dip OOS] n=411 final=0.731 CAGR=-15.8% Sharpe=-1.41 MDD=-28.0% win=0.394 tp_rate=0.207 worstHit=-0.67%eq straddle=0.000 reasons={'sl': 0.48, 'close': 0.31, 'tp': 0.21}
+
+[C_delay] TRAIN best: entry=delay(570) SL=3% k=1 score>=0.8 -> train Sharpe=-1.47 CAGR=-8.3%
+[C_delay OOS] n=216 final=0.797 CAGR=-11.7% Sharpe=-2.10 MDD=-20.6% win=0.412 tp_rate=0.301 worstHit=-0.98%eq straddle=0.009 reasons={'close': 0.4, 'tp': 0.3, 'sl': 0.29, 'straddle': 0.01}
+
+[D_firstclose] TRAIN best: entry=firstclose(None) SL=5% k=1 score>=0.8 -> train Sharpe=-1.13 CAGR=-7.7%
+[D_firstclose OOS] n=216 final=0.890 CAGR=-6.2% Sharpe=-0.76 MDD=-12.7% win=0.500 tp_rate=0.301 worstHit=-1.07%eq straddle=0.028 reasons={'close': 0.47, 'tp': 0.3, 'sl': 0.2, 'straddle': 0.03}
+
+[E_orb] TRAIN best: entry=orb(30) SL=5% k=1 score>=0.8 -> train Sharpe=-1.60 CAGR=-5.9%
+[E_orb OOS] n=162 final=0.747 CAGR=-14.7% Sharpe=-2.97 MDD=-25.6% win=0.389 tp_rate=0.506 worstHit=-3.12%eq straddle=0.000 reasons={'tp': 0.51, 'close': 0.41, 'sl': 0.08}
+
+[F_dipreclaim] TRAIN best: entry=dipreclaim(0.02) SL=3% k=3 score>=0.8 -> train Sharpe=-1.71 CAGR=-8.9%
+[F_dipreclaim OOS] n=294 final=0.405 CAGR=-39.0% Sharpe=-5.57 MDD=-59.9% win=0.265 tp_rate=0.085 worstHit=-0.67%eq straddle=0.000 reasons={'sl': 0.6, 'close': 0.31, 'tp': 0.09}
+
+=== OOS leaderboard (train-selected configs) ===
+  A_open         OOS Sharpe=-0.63 CAGR=  -8.8% MDD= -20.9% n= 450 tp=0.30 win=0.46 worstHit=-0.87%
+  D_firstclose   OOS Sharpe=-0.76 CAGR=  -6.2% MDD= -12.7% n= 216 tp=0.30 win=0.50 worstHit=-1.07%
+  B_dip          OOS Sharpe=-1.41 CAGR= -15.8% MDD= -28.0% n= 411 tp=0.21 win=0.39 worstHit=-0.67%
+  C_delay        OOS Sharpe=-2.10 CAGR= -11.7% MDD= -20.6% n= 216 tp=0.30 win=0.41 worstHit=-0.98%
+  E_orb          OOS Sharpe=-2.97 CAGR= -14.7% MDD= -25.6% n= 162 tp=0.51 win=0.39 worstHit=-3.12%
+  F_dipreclaim   OOS Sharpe=-5.57 CAGR= -39.0% MDD= -59.9% n= 294 tp=0.09 win=0.27 worstHit=-0.67%
+
+=== CHAMPION: A_open -> full OOS detail + quarterly ===
+[A_open OOS] n=450 final=0.846 CAGR=-8.8% Sharpe=-0.63 MDD=-20.9% win=0.464 tp_rate=0.304 worstHit=-0.87%eq straddle=0.000 reasons={'sl': 0.36, 'close': 0.34, 'tp': 0.3}
+quarterly mean net/trade: 2024Q3:+0.16%(9) | 2024Q4:-0.38%(57) | 2025Q1:-0.39%(67) | 2025Q2:+0.09%(47) | 2025Q3:-1.86%(13) | 2025Q4:+0.16%(46) | 2026Q1:+0.51%(96) | 2026Q2:-0.61%(115)
+worst single-trade equity hit -0.87% | >1% eq losses 0 (0.00%)
+s51 done  (172s)

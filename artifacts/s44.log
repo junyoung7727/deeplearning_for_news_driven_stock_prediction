@@ -1,0 +1,35 @@
+features saved (188100, 100) (188100, 7, 100) (188100, 30, 100)  (20s)
+features (188100, 100) zero-day M rows 91.2% L rows 91.2%  (20s)
+train 98274 dev 17687 test 72139  (20s)
+
+=== 1) VOL-LR control ===
+   k=2%: test acc=0.7193 MCC=+0.2404 base=0.3053
+   k=3%: test acc=0.8194 MCC=+0.1985 base=0.1833
+   k=5%: test acc=0.9145 MCC=+0.1711 base=0.0851
+
+[2) VOL-MLP 5k] params=0.005M seeds=3 (31s)
+   k=2%: test acc=0.7271 MCC=+0.3025 (train +0.3280, GAP +0.0256)
+   k=3%: test acc=0.8217 MCC=+0.2479 (train +0.2874, GAP +0.0396)
+   k=5%: test acc=0.9156 MCC=+0.1719 (train +0.2148, GAP +0.0430)
+/home/junyoung/dlfe/code/s44_kr_arch_probe.py:160: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.enc = nn.TransformerEncoder(enc, layers)
+/home/junyoung/dlfe/code/s44_kr_arch_probe.py:160: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.enc = nn.TransformerEncoder(enc, layers)
+/home/junyoung/dlfe/code/s44_kr_arch_probe.py:160: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.enc = nn.TransformerEncoder(enc, layers)
+
+[3) NEWS-TF 7M + zero-day mask] params=7.154M seeds=2 (862s)
+   k=2%: test acc=0.6842 MCC=-0.0044 (train +0.1356, GAP +0.1400)
+   k=3%: test acc=0.8166 MCC=-0.0029 (train +0.0446, GAP +0.0475)
+   k=5%: test acc=0.9149 MCC=+0.0000 (train +0.0000, GAP +0.0000)
+/home/junyoung/dlfe/code/s44_kr_arch_probe.py:160: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.enc = nn.TransformerEncoder(enc, layers)
+/home/junyoung/dlfe/code/s44_kr_arch_probe.py:160: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.enc = nn.TransformerEncoder(enc, layers)
+/home/junyoung/dlfe/code/s44_kr_arch_probe.py:160: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.enc = nn.TransformerEncoder(enc, layers)
+
+[4) FUSED-TF 7M (news + VOL token) + mask] params=7.157M seeds=2 (851s)
+   k=2%: test acc=0.7233 MCC=+0.3043 (train +0.3343, GAP +0.0300)
+   k=3%: test acc=0.8175 MCC=+0.2674 (train +0.3140, GAP +0.0466)
+   k=5%: test acc=0.9128 MCC=+0.2088 (train +0.2641, GAP +0.0553)

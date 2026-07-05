@@ -1,0 +1,76 @@
+buckets over=108019 info=155684  (45s)
+master rows=1610670 PSEQ=(1610670, 30, 5)  (128s)
+X (1610670, 102) train 782319 dev 146918 test 681433  (134s)
+GBM UP2 iters=500 (20s)  (154s)
+GBM UP3 iters=330 (12s)  (166s)
+GBM UP5 iters=194 (8s)  (174s)
+GBM DN2 iters=500 (19s)  (194s)
+GBM DN3 iters=500 (17s)  (211s)
+GBM DN5 iters=323 (13s)  (224s)
+GBM dev MCC UP2=+0.286 UP3=+0.282 UP5=+0.257 DN2=+0.336 DN3=+0.331 DN5=+0.308  (234s)
+
+=== s48 GBM full-universe test (n=681433, days=1113) ===
+GBM UP2: base=0.3012 th=0.580 acc=0.7135 AP=0.5388 MCC=+0.3052 [+0.2952,+0.3152] top10=0.648 [0.632,0.666]
+   quarter MCC: +0.301 | +0.292 | +0.329 | +0.292
+GBM UP3: base=0.1768 th=0.575 acc=0.7637 AP=0.4061 MCC=+0.2940 [+0.2835,+0.3046] top10=0.484 [0.467,0.501]
+   quarter MCC: +0.281 | +0.287 | +0.312 | +0.290
+GBM UP5: base=0.0749 th=0.632 acc=0.8513 AP=0.2570 MCC=+0.2568 [+0.2472,+0.2663] top10=0.275 [0.265,0.287]
+   quarter MCC: +0.235 | +0.263 | +0.264 | +0.261
+GBM DN2: base=0.3239 th=0.529 acc=0.7146 AP=0.6055 MCC=+0.3564 [+0.3475,+0.3653] top10=0.729 [0.720,0.739]
+   quarter MCC: +0.285 | +0.356 | +0.375 | +0.393
+GBM DN3: base=0.1718 th=0.575 acc=0.8006 AP=0.4747 MCC=+0.3593 [+0.3493,+0.3690] top10=0.552 [0.540,0.565]
+   quarter MCC: +0.287 | +0.360 | +0.372 | +0.395
+GBM DN5: base=0.0547 th=0.696 acc=0.9196 AP=0.3268 MCC=+0.3281 [+0.3168,+0.3393] top10=0.277 [0.265,0.290]
+   quarter MCC: +0.268 | +0.339 | +0.324 | +0.358
+
+=== s48 GBM small-cap event-window subset (n=71838, s47-comparable) ===
+GBMsub UP5: base=0.0851 th=0.632 acc=0.8216 AP=0.3078 MCC=+0.2874 [+0.2746,+0.2998] top10=0.322 [0.308,0.337]
+   quarter MCC: +0.243 | +0.304 | +0.317 | +0.290
+GBMsub DN5: base=0.0632 th=0.696 acc=0.9093 AP=0.3875 MCC=+0.3779 [+0.3615,+0.3953] top10=0.337 [0.321,0.353]
+   quarter MCC: +0.333 | +0.389 | +0.408 | +0.392
+
+--- GBM daily cross-sectional selection (full universe) ---
+   GBM UP5 daily top1: hit=0.547 [0.519,0.576] vs day-base 0.075 (days=1113)
+   GBM UP5 daily top3: hit=0.500 [0.482,0.517] vs day-base 0.075 (days=1113)
+   GBM DN5 daily top1: hit=0.685 [0.657,0.712] vs day-base 0.055 (days=1113)
+   GBM DN5 daily top3: hit=0.635 [0.618,0.653] vs day-base 0.055 (days=1113)
+
+=== meta-labeling (expanding OOF, top-20% candidates) ===
+meta UP5: cand oof n=142192 hit=0.226  (309s)
+   META UP5 daily top1: hit=0.562 [0.534,0.590] vs day-base 0.075 (days=1113)
+   META UP5 daily top3: hit=0.508 [0.490,0.526] vs day-base 0.075 (days=1113)
+   UP5 top10 primary=0.275 -> meta=0.275
+meta DN5: cand oof n=142192 hit=0.175  (426s)
+   META DN5 daily top1: hit=0.692 [0.665,0.719] vs day-base 0.055 (days=1113)
+   META DN5 daily top3: hit=0.637 [0.620,0.655] vs day-base 0.055 (days=1113)
+   DN5 top10 primary=0.277 -> meta=0.268
+
+=== TF enriched-V (small-cap event-window) ===
+date alignment agreement 1.0000 on 187701  (428s)
+/home/junyoung/dlfe/code/s46_kr_bidirectional_rare.py:44: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.enc = nn.TransformerEncoder(enc, layers)
+TF seed 13 best dev focus MCC=+0.3009  (1383s)
+/home/junyoung/dlfe/code/s46_kr_bidirectional_rare.py:44: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.enc = nn.TransformerEncoder(enc, layers)
+TF seed 14 best dev focus MCC=+0.2996  (2775s)
+TF dev MCC UP2=+0.291 UP3=+0.289 UP5=+0.270 DN2=+0.356 DN3=+0.360 DN5=+0.331  (2777s)
+
+=== s48 FINAL ENS (small-cap event-window, n=71838) ===
+ENS(w=0.6) UP2: base=0.3050 th=0.568 acc=0.7331 AP=0.5805 MCC=+0.3485 [+0.3343,+0.3619] top10=0.699 [0.676,0.720]
+   quarter MCC: +0.337 | +0.334 | +0.383 | +0.327
+ENS(w=0.3) UP3: base=0.1832 th=0.633 acc=0.8007 AP=0.4545 MCC=+0.3320 [+0.3158,+0.3474] top10=0.538 [0.517,0.559]
+   quarter MCC: +0.309 | +0.330 | +0.365 | +0.319
+ENS(w=0.2) UP5: base=0.0851 th=0.691 acc=0.8673 AP=0.3116 MCC=+0.2915 [+0.2777,+0.3055] top10=0.325 [0.310,0.341]
+   quarter MCC: +0.241 | +0.316 | +0.323 | +0.295
+   ENS UP5 daily top1: hit=0.467 [0.439,0.498] vs day-base 0.084 (days=1113)
+   ENS UP5 daily top3: hit=0.379 [0.362,0.397] vs day-base 0.084 (days=1113)
+ENS(w=0.7) DN2: base=0.3328 th=0.541 acc=0.7500 AP=0.6575 MCC=+0.4125 [+0.4014,+0.4243] top10=0.788 [0.776,0.799]
+   quarter MCC: +0.361 | +0.409 | +0.436 | +0.443
+ENS(w=0.8) DN3: base=0.1832 th=0.526 acc=0.8102 AP=0.5391 MCC=+0.4194 [+0.4074,+0.4324] top10=0.626 [0.611,0.642]
+   quarter MCC: +0.359 | +0.425 | +0.445 | +0.452
+ENS(w=0.6) DN5: base=0.0632 th=0.640 acc=0.9167 AP=0.3914 MCC=+0.3830 [+0.3670,+0.4001] top10=0.347 [0.331,0.364]
+   quarter MCC: +0.332 | +0.398 | +0.414 | +0.398
+   ENS DN5 daily top1: hit=0.532 [0.504,0.562] vs day-base 0.061 (days=1113)
+   ENS DN5 daily top3: hit=0.407 [0.389,0.425] vs day-base 0.061 (days=1113)
+saved kr48_probs.npz  (2796s)
+s48 done  (2796s)

@@ -1,0 +1,59 @@
+universe 626 tickers, 745 names  (0s)
+titles since 2015-01-01: 18163528  (30s)
+substring candidates: 2858901  (57s)
+tokenized  (87s)
+precise links 2076685 over 1994575 titles; events 523663  (142s)
+vocab 54420  (148s)
+w2v pairs 12000000  (169s)
+  w2v 1/4 loss=2.2056  (175s)
+  w2v 2/4 loss=2.0602  (179s)
+  w2v 3/4 loss=2.0258  (184s)
+  w2v 4/4 loss=2.0144  (189s)
+  NTN 1/10 hinge=0.1691  (196s)
+  NTN 4/10 hinge=0.1619  (199s)
+  NTN 7/10 hinge=0.1778  (202s)
+  NTN 10/10 hinge=0.1840  (205s)
+event embs 516764  (206s)
+ohlcv 1641906 rows 2015-01-02..2026-06-18; small (ticker,month) pairs 40373  (210s)
+usable links 540486 fresh 58.7%  (211s)
+buckets over 108019 info 155684  (213s)
+samples 808500, event-window 188100 (23.3%)  (230s)
+tensors S(188100, 100) M(188100, 7, 100) L(188100, 30, 100) (2.66 GiB)  (232s)
+train 98274 dev 17687 test 72139  (test from 2021-11-23)  (232s)
+
+=== VOL-LR baseline (extended data) ===
+   k=2%: acc=0.7185 mcc=+0.2360 base=0.3053
+   k=3%: acc=0.8196 mcc=+0.1970 base=0.1833
+   k=5%: acc=0.9149 mcc=+0.1759 base=0.0851
+
+[S-0.1M control] params=0.06M  seeds=3  (44s)
+   k=2%: MCC train=+0.1144 dev=+0.0112 test=-0.0005  GAP(train-test)=+0.1150
+   k=3%: MCC train=+0.0556 dev=+0.0021 test=-0.0033  GAP(train-test)=+0.0589
+   k=5%: MCC train=+0.0000 dev=+0.0000 test=+0.0000  GAP(train-test)=+0.0000
+
+[M-0.9M deepCNN+reg] params=0.78M  seeds=3  (58s)
+   k=2%: MCC train=+0.1109 dev=+0.0069 test=-0.0021  GAP(train-test)=+0.1130
+   k=3%: MCC train=+0.0757 dev=+0.0006 test=-0.0013  GAP(train-test)=+0.0770
+   k=5%: MCC train=+0.0529 dev=+0.0206 test=-0.0025  GAP(train-test)=+0.0554
+/home/junyoung/dlfe/code/s43_kr_scale_remote.py:281: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.enc = nn.TransformerEncoder(enc, layers)
+/home/junyoung/dlfe/code/s43_kr_scale_remote.py:281: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.enc = nn.TransformerEncoder(enc, layers)
+/home/junyoung/dlfe/code/s43_kr_scale_remote.py:281: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.enc = nn.TransformerEncoder(enc, layers)
+/home/junyoung/dlfe/code/s43_kr_scale_remote.py:281: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.enc = nn.TransformerEncoder(enc, layers)
+
+[L-7M transformer+reg] params=7.15M  seeds=3  (1443s)
+   k=2%: MCC train=+0.1127 dev=+0.0174 test=-0.0054  GAP(train-test)=+0.1181
+   k=3%: MCC train=+0.0804 dev=+0.0135 test=-0.0042  GAP(train-test)=+0.0846
+   k=5%: MCC train=+0.0178 dev=+0.0000 test=+0.0000  GAP(train-test)=+0.0178
+   [S-0.1M] k=2% base=0.305 top10%=0.320(p=4e-03,n=7213)  top5%=0.324(p=8e-03,n=3606)  overnight-top10%=0.285(n=425,base=0.312)
+   [S-0.1M] k=3% base=0.183 top10%=0.195(p=4e-03,n=7213)  top5%=0.194(p=5e-02,n=3606)  overnight-top10%=0.179(n=425,base=0.200)
+   [S-0.1M] k=5% base=0.085 top10%=0.095(p=2e-03,n=7213)  top5%=0.093(p=5e-02,n=3606)  overnight-top10%=0.092(n=425,base=0.108)
+   [M-0.9M] k=2% base=0.305 top10%=0.320(p=3e-03,n=7213)  top5%=0.317(p=7e-02,n=3606)  overnight-top10%=0.311(n=425,base=0.312)
+   [M-0.9M] k=3% base=0.183 top10%=0.194(p=1e-02,n=7213)  top5%=0.199(p=8e-03,n=3606)  overnight-top10%=0.202(n=425,base=0.200)
+   [M-0.9M] k=5% base=0.085 top10%=0.093(p=1e-02,n=7213)  top5%=0.095(p=2e-02,n=3606)  overnight-top10%=0.094(n=425,base=0.108)
+   [L-7M] k=2% base=0.305 top10%=0.300(p=8e-01,n=7213)  top5%=0.308(p=4e-01,n=3606)  overnight-top10%=0.282(n=425,base=0.312)
+   [L-7M] k=3% base=0.183 top10%=0.177(p=9e-01,n=7213)  top5%=0.179(p=8e-01,n=3606)  overnight-top10%=0.158(n=425,base=0.200)
+   [L-7M] k=5% base=0.085 top10%=0.086(p=4e-01,n=7213)  top5%=0.088(p=3e-01,n=3606)  overnight-top10%=0.096(n=425,base=0.108)

@@ -1,0 +1,29 @@
+== (1) unfiltered / loose-gap top-1 EV ==
+TUNE k1 gap<=9.9  -> n= 617 hit=0.528 EV=-0.53% E[miss]=-6.39%
+TUNE k1 gap<=0.05 -> n= 617 hit=0.491 EV=-0.12% E[miss]=-4.77%
+TUNE k1 gap<=0.02 -> n= 617 hit=0.475 EV=+0.02% E[miss]=-4.22%
+VAL k1 gap<=9.9  -> n= 496 hit=0.571 EV=-0.34% E[miss]=-7.03%
+VAL k1 gap<=0.05 -> n= 496 hit=0.530 EV=-0.02% E[miss]=-5.35%
+VAL k1 gap<=0.02 -> n= 496 hit=0.492 EV=-0.10% E[miss]=-4.74%
+
+== (2) ex-ante gap-DOWN rule (top-score names opening down) ==
+TUNE k=1 gap<=-0.00 -> n= 617 hit=0.455 EV=+0.04% E[miss]=-3.86% days=617
+TUNE k=2 gap<=-0.00 -> n=1234 hit=0.425 EV=+0.06% E[miss]=-3.38% days=617
+TUNE k=3 gap<=-0.00 -> n=1850 hit=0.396 EV=+0.01% E[miss]=-3.06% days=617
+TUNE k=1 gap<=-0.02 -> n= 586 hit=0.433 EV=+0.15% E[miss]=-3.33% days=586
+TUNE k=2 gap<=-0.02 -> n=1106 hit=0.375 EV=+0.02% E[miss]=-2.80% days=586
+TUNE k=3 gap<=-0.02 -> n=1553 hit=0.355 EV=-0.04% E[miss]=-2.65% days=586
+TUNE k=1 gap<=-0.04 -> n= 352 hit=0.375 EV=-0.70% E[miss]=-3.94% days=352
+TUNE k=2 gap<=-0.04 -> n= 546 hit=0.368 EV=-0.40% E[miss]=-3.37% days=352
+TUNE k=3 gap<=-0.04 -> n= 648 hit=0.358 EV=-0.35% E[miss]=-3.16% days=352
+
+VAL k=1 gap<=-0.00 -> n= 496 hit=0.490 EV=+0.14% E[miss]=-4.23% days=496
+VAL k=2 gap<=-0.00 -> n= 992 hit=0.457 EV=-0.09% E[miss]=-4.11% days=496
+VAL k=3 gap<=-0.00 -> n=1488 hit=0.414 EV=-0.21% E[miss]=-3.67% days=496
+VAL k=1 gap<=-0.02 -> n= 486 hit=0.416 EV=-0.20% E[miss]=-3.69% days=486
+VAL k=2 gap<=-0.02 -> n= 928 hit=0.383 EV=-0.22% E[miss]=-3.27% days=486
+VAL k=3 gap<=-0.02 -> n=1339 hit=0.374 EV=-0.07% E[miss]=-2.93% days=486
+VAL k=1 gap<=-0.04 -> n= 329 hit=0.438 EV=-0.13% E[miss]=-3.90% days=329
+VAL k=2 gap<=-0.04 -> n= 545 hit=0.417 EV=-0.27% E[miss]=-3.81% days=329
+VAL k=3 gap<=-0.04 -> n= 690 hit=0.425 EV=-0.09% E[miss]=-3.63% days=329
+

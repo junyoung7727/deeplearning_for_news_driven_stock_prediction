@@ -1,0 +1,27 @@
+linked-news titles: 598133  (79s)
+tokenized 598133 titles, events from 170623 (28.5%)  (177s)
+(ticker,news) links: 671081
+KR vocab: 31049
+w2v pairs: 24501942
+subsampled w2v pairs to 8000000
+  w2v epoch 1/4 loss=2.2545 (464s)
+  w2v epoch 2/4 loss=2.1274 (536s)
+  w2v epoch 3/4 loss=2.1024 (641s)
+  w2v epoch 4/4 loss=2.0975 (793s)
+KR w2v done (793s)
+  NTN epoch 1/10 loss=2.919 (880s)
+  NTN epoch 4/10 loss=3.287 (1040s)
+  NTN epoch 7/10 loss=2.904 (1200s)
+  NTN epoch 10/10 loss=3.816 (1359s)
+KR NTN done, event embs=166252 (1377s)
+small-cap samples: 147183  with short-event: 3.4%  (1627s)
+
+KR SMALL-CAP EB-CNN (IE->NTN->CNN, no sentiment): ALL-test acc=0.5624 n=59678
+  [EVENT-days (event on prior trading day)] n=2146 base=0.5443 acc=0.5438 mcc=-0.0198
+     conf top 50%: acc=0.5377 (n=1073)
+     conf top 30%: acc=0.5481 (n=644)
+     conf top 20%: acc=0.5488 (n=430)
+  [ANY-event-in-window (30d) days] n=15115 base=0.5681 acc=0.5680 mcc=-0.0071
+     conf top 50%: acc=0.5691 (n=7558)
+     conf top 30%: acc=0.5643 (n=4535)
+     conf top 20%: acc=0.5662 (n=3027)

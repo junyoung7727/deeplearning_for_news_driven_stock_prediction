@@ -1,0 +1,17 @@
+C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.6.3) or chardet (7.2.0)/charset_normalizer (3.4.4) doesn't match a supported version!
+  warnings.warn(
+KRX 로그인 실패: KRX_ID 또는 KRX_PW 환경 변수가 설정되지 않았습니다.
+universe 626 tickers, 20240618 -> 20260618
+  50/626 tickers  (12s)
+  100/626 tickers  (22s)
+  150/626 tickers  (33s)
+  200/626 tickers  (43s)
+  250/626 tickers  (54s)
+  300/626 tickers  (69s)
+  350/626 tickers  (79s)
+  400/626 tickers  (90s)
+  450/626 tickers  (101s)
+  500/626 tickers  (112s)
+  550/626 tickers  (122s)
+  600/626 tickers  (133s)
+saved D:\Github\homeserver\deeplearningforevent\artifacts\kr_ohlcv.parquet  rows=303788  tickers=626

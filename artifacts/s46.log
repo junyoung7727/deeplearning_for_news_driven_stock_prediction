@@ -1,0 +1,31 @@
+usable links 540486  (8s)
+novelty done: mean=0.310 median n7=17  (11s)
+sentiment coverage 100.0%  (14s)
+buckets over 108019 info 155684  (50s)
+/home/junyoung/dlfe/code/s45_kr_feature_ladder.py:142: RuntimeWarning: divide by zero encountered in divide
+  volz = np.log(np.where((v > 0) & (vmed > 0), v / vmed, 1.0))
+/home/junyoung/dlfe/code/s45_kr_feature_ladder.py:142: RuntimeWarning: invalid value encountered in divide
+  volz = np.log(np.where((v > 0) & (vmed > 0), v / vmed, 1.0))
+samples 187701  (58s)
+features saved S(187701, 102) L(187701, 30, 102) PSEQ(187701, 30, 5)  (62s)
+samples=187701 train=98211 dev=17652 test=71838 labels UP2=0.339 UP3=0.211 UP5=0.100 DN2=0.372 DN3=0.211 DN5=0.075  (63s)
+train prevalence UP2=0.359 UP3=0.227 UP5=0.108 DN2=0.394 DN3=0.227 DN5=0.082  (63s)
+pos_weight UP2=1.8 UP3=3.4 UP5=8.3 DN2=1.5 DN3=3.4 DN5=11.2  (63s)
+/home/junyoung/dlfe/code/s46_kr_bidirectional_rare.py:44: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.enc = nn.TransformerEncoder(enc, layers)
+seed 13 best dev focus MCC=+0.2873  (1019s)
+/home/junyoung/dlfe/code/s46_kr_bidirectional_rare.py:44: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.enc = nn.TransformerEncoder(enc, layers)
+seed 14 best dev focus MCC=+0.2840  (2411s)
+/home/junyoung/dlfe/code/s46_kr_bidirectional_rare.py:44: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.enc = nn.TransformerEncoder(enc, layers)
+
+[BIDIR rare focal+calibrated] params=7.18M (2350s)
+UP2: base=0.3050 th=0.529 acc=0.7196 MCC=+0.3132 (train +0.3402, GAP +0.0271) AP=0.5419
+UP3: base=0.1832 th=0.540 acc=0.7860 MCC=+0.3138 (train +0.3348, GAP +0.0210) AP=0.4243
+UP5: base=0.0851 th=0.555 acc=0.8523 MCC=+0.2813 (train +0.3162, GAP +0.0350) AP=0.2938 top10=0.317 top5=0.402
+DN2: base=0.3328 th=0.495 acc=0.7066 MCC=+0.3479 (train +0.3403, GAP -0.0076) AP=0.5981
+DN3: base=0.1832 th=0.522 acc=0.7917 MCC=+0.3637 (train +0.3509, GAP -0.0128) AP=0.4851
+DN5: base=0.0632 th=0.627 acc=0.9238 MCC=+0.3385 (train +0.3370, GAP -0.0015) AP=0.3508 top10=0.315 top5=0.417
+DIR5 top10%: hit=0.332 n=7183 long_frac=0.429
+DIR5 top5%: hit=0.429 n=3591 long_frac=0.356
